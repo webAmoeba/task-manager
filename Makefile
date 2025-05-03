@@ -14,3 +14,11 @@ lint:
 
 fix:
 	uv run ruff check --fix
+
+#_______________________________________________________________________________
+
+build:
+	./build.sh
+
+render-start:
+	gunicorn task_manager.wsgi

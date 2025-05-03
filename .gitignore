@@ -10,3 +10,7 @@ __pycache__/
 coverage.xml
 *_cache/
 .python-version
+*.py[oc]
+wheels/
+*.sqlite3
+htmlcov/
