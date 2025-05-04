@@ -22,3 +22,11 @@ build:
 
 render-start:
 	gunicorn task_manager.wsgi
+
+#_______________________________________________________________________________
+
+messages:
+	django-admin makemessages -l ru
+
+compile_messages:
+	django-admin compilemessages
