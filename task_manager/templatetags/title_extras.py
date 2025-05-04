@@ -1,10 +1,10 @@
 from django import template
+from django.utils.translation import gettext as _
 
 register = template.Library()
 
-
 @register.filter
-def format_title(value, default="Менеджер задач"):
+def format_title(value, default=_("Task manager")):
     if value == default or not value:
         return default
-    return f"МЗ: {value}"
+    return _("TM: %(value)s") % {'value': value}
