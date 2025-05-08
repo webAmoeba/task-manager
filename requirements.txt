@@ -2,13 +2,23 @@
 #    uv pip compile pyproject.toml -o requirements.txt
 asgiref==3.8.1
     # via django
-django==5.2
+dj-database-url==2.3.0
     # via hexlet-code (pyproject.toml)
+django==5.2
+    # via
+    #   hexlet-code (pyproject.toml)
+    #   dj-database-url
 gunicorn==23.0.0
     # via hexlet-code (pyproject.toml)
 packaging==25.0
     # via gunicorn
+psycopg2-binary==2.9.10
+    # via hexlet-code (pyproject.toml)
 sqlparse==0.5.3
     # via django
 typing-extensions==4.13.2
-    # via asgiref
+    # via
+    #   asgiref
+    #   dj-database-url
+whitenoise==6.9.0
+    # via hexlet-code (pyproject.toml)

@@ -17,6 +17,13 @@ fix:
 
 #_______________________________________________________________________________
 
+collectstatic:
+	python manage.py collectstatic --noinput
+
+migrate:
+	python manage.py migrate
+	python manage.py shell < create_superuser.py
+
 build:
 	./build.sh
 
