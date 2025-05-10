@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-04 16:54+0400\n"
+"POT-Creation-Date: 2025-05-10 16:49+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,17 +20,29 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: task_manager/settings.py:145
+#: task_manager/apps/users/templates/users/user_list.html:9
+msgid "ID"
+msgstr "ID"
+
+#: task_manager/apps/users/templates/users/user_list.html:10
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: task_manager/apps/users/templates/users/user_list.html:11
+msgid "Full name"
+msgstr "Полное имя"
+
+#: task_manager/apps/users/views.py:18 task_manager/templates/base.html:22
+msgid "Users"
+msgstr "Пользователи"
+
+#: task_manager/settings.py:154
 msgid "Task manager"
 msgstr "Менеджер задач"
 
 #: task_manager/templates/base.html:14
 msgid "Task Manager"
 msgstr "Менеджер задач"
-
-#: task_manager/templates/base.html:22
-msgid "Users"
-msgstr "Пользователи"
 
 #: task_manager/templates/base.html:29
 msgid "Login"
@@ -40,11 +52,10 @@ msgstr "Вход"
 msgid "Register"
 msgstr "Регистрация"
 
-#: task_manager/templatetags/custom_filters.py:12
+#: task_manager/templatetags/custom_filters.py:13
 #, python-format
 msgid "TM: %(value)s"
 msgstr "МЗ: %(value)s"
 
-#: task_manager/views.py:10
-msgid "Main"
-msgstr "Главная"
+#~ msgid "Main"
+#~ msgstr "Главная"

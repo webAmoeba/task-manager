@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load i18n custom_filters %}
+
+{% block content %}
+  <h1 class="my-4">{{ page_title }}</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>
+          {% trans 'ID' %}
+        </th>
+        <th>
+          {% trans 'Username' %}
+        </th>
+        <th>
+          {% trans 'Full name' %}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.get_full_name }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
