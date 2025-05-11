@@ -49,7 +49,7 @@ msgid "Login"
 msgstr "Вход"
 
 #: task_manager/templates/base.html:32
-msgid "Register"
+msgid "Sign up"
 msgstr "Регистрация"
 
 #: task_manager/templatetags/custom_filters.py:13
