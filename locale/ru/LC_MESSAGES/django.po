@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-10 16:49+0400\n"
+"POT-Creation-Date: 2025-05-14 07:07+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,46 +20,57 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: task_manager/apps/users/templates/users/user_form.html:5
-#: task_manager/apps/users/views.py:38
-msgid "Registration"
-msgstr "Регистрация"
+#: task_manager/apps/users/templates/users/login.html:5
+#: task_manager/apps/users/templates/users/login.html:16
+#: task_manager/templates/base.html:43
+msgid "Login"
+msgstr "Вход"
 
-#: task_manager/apps/users/templates/users/user_form.html:10
-msgid "First name"
-msgstr "Имя"
-
-#: task_manager/apps/users/templates/users/user_form.html:13
-msgid "Last name"
-msgstr "Фамилия"
-
-#: task_manager/apps/users/templates/users/user_form.html:16
+#: task_manager/apps/users/templates/users/login.html:9
+#: task_manager/apps/users/templates/users/login.html:10
+#: task_manager/apps/users/templates/users/user_form.html:15
 #: task_manager/apps/users/templates/users/user_list.html:13
 msgid "Username"
 msgstr "Имя пользователя"
 
-#: task_manager/apps/users/templates/users/user_form.html:20
-msgid ""
-"Required field.No more than 150 characters.Letters, numbers and symbols only"
-msgstr "Обязательное поле. Не более 150 символов. Только буквы, цифры и символы."
-
-#: task_manager/apps/users/templates/users/user_form.html:24
+#: task_manager/apps/users/templates/users/login.html:13
+#: task_manager/apps/users/templates/users/login.html:14
+#: task_manager/apps/users/templates/users/user_form.html:23
 msgid "Password"
 msgstr "Пароль"
 
-#: task_manager/apps/users/templates/users/user_form.html:30
+#: task_manager/apps/users/templates/users/user_form.html:5
+#: task_manager/apps/users/views.py:37
+msgid "Registration"
+msgstr "Регистрация"
+
+#: task_manager/apps/users/templates/users/user_form.html:9
+msgid "First name"
+msgstr "Имя"
+
+#: task_manager/apps/users/templates/users/user_form.html:12
+msgid "Last name"
+msgstr "Фамилия"
+
+#: task_manager/apps/users/templates/users/user_form.html:19
+msgid ""
+"Required field.No more than 150 characters.Letters, numbers and symbols only"
+msgstr ""
+"Обязательное поле. Не более 150 символов. Только буквы, цифры и символы."
+
+#: task_manager/apps/users/templates/users/user_form.html:29
 msgid "Your password must be at least 3 characters long."
 msgstr "Ваш пароль должен содержать не менее 3 символов."
 
-#: task_manager/apps/users/templates/users/user_form.html:38
+#: task_manager/apps/users/templates/users/user_form.html:37
 msgid "Confirm password"
 msgstr "Подтвердите пароль"
 
-#: task_manager/apps/users/templates/users/user_form.html:42
+#: task_manager/apps/users/templates/users/user_form.html:41
 msgid "To confirm, please enter your password again."
 msgstr "Для подтверждения введите пароль ещё раз."
 
-#: task_manager/apps/users/templates/users/user_form.html:45
+#: task_manager/apps/users/templates/users/user_form.html:44
 msgid "Register"
 msgstr "Зарегистрироваться"
 
@@ -71,15 +82,15 @@ msgstr "ID"
 msgid "Full name"
 msgstr "Полное имя"
 
-#: task_manager/apps/users/views.py:22 task_manager/templates/base.html:20
+#: task_manager/apps/users/views.py:21 task_manager/templates/base.html:18
 msgid "Users"
 msgstr "Пользователи"
 
-#: task_manager/apps/users/views.py:34
+#: task_manager/apps/users/views.py:32
 msgid "User successfully registered"
 msgstr "Пользователь успешно зарегистрирован"
 
-#: task_manager/settings.py:154
+#: task_manager/settings.py:152
 msgid "Task manager"
 msgstr "Менеджер задач"
 
@@ -87,11 +98,23 @@ msgstr "Менеджер задач"
 msgid "Task Manager"
 msgstr "Менеджер задач"
 
-#: task_manager/templates/base.html:25
-msgid "Login"
-msgstr "Вход"
+#: task_manager/templates/base.html:23
+msgid "Statuses"
+msgstr "Статусы"
 
-#: task_manager/templates/base.html:28
+#: task_manager/templates/base.html:26
+msgid "Labels"
+msgstr "Метки"
+
+#: task_manager/templates/base.html:29
+msgid "Tasks"
+msgstr "Задачи"
+
+#: task_manager/templates/base.html:38
+msgid "Logout"
+msgstr "Выход"
+
+#: task_manager/templates/base.html:46
 msgid "Sign up"
 msgstr "Регистрация"
 
