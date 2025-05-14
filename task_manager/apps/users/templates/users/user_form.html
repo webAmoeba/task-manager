@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+  <h1 class="my-4">{% trans 'Registration' %}</h1>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label" for="id_first_name">{% trans 'First name' %}</label><input type="text" name="first_name" maxlength="150" class="form-control" placeholder="{% trans 'First name' %}" required id="id_first_name" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id_last_name">{% trans 'Last name' %}</label><input type="text" name="last_name" maxlength="150" class="form-control" placeholder="{% trans 'Last name' %}" required id="id_last_name" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id_username">{% trans 'Username' %}</label><input type="text" name="username" maxlength="150" autofocus class="form-control" placeholder="{% trans 'Username' %}" required aria-describedby="id_username_helptext" id="id_username" />
+      <div class="form-text">
+        {% comment %} <div class="form-text">Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.</div> {% endcomment %}
+        {% trans 'Required field.No more than 150 characters.Letters, numbers and symbols only' %}@/./+/-/_.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id_password1">{% trans 'Password' %}</label><input type="password" name="password1" autocomplete="new-password" class="form-control" placeholder="{% trans 'Password' %}" aria-describedby="id_password1_helptext" id="id_password1" />
+      <div class="form-text">
+        <ul>
+          {% comment %} <li>Ваш пароль должен содержать как минимум 3 символа.</li> {% endcomment %}
+          <li>
+            {% trans 'Your password must be at least 3 characters long.' %}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="mb-3">
+      {% comment %}Подтверждение пароля{% endcomment %}
+      <label class="form-label" for="id_password2">{% trans 'Confirm password' %}</label><input type="password" name="password2" autocomplete="new-password" class="form-control" placeholder="{% trans 'Confirm password' %}" aria-describedby="id_password2_helptext" id="id_password2" />
+      {% comment %} <div class="form-text">Для подтверждения введите, пожалуйста, пароль ещё раз.</div> {% endcomment %}
+      <div class="form-text">
+        {% trans 'To confirm, please enter your password again.' %}
+      </div>
+    </div>
+    <input class="btn btn-primary" type="submit" value="{% trans 'Register' %}" />
+  </form>
+{% endblock %}

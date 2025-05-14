@@ -4,7 +4,7 @@ install:
 dev:
 	uv run python manage.py runserver
 
-req-txt:
+req:
 	uv pip compile pyproject.toml -o requirements.txt
 
 #_______________________________________________________________________________Lint
@@ -32,8 +32,8 @@ render-start:
 
 #_______________________________________________________________________________
 
-messages:
+ms:
 	django-admin makemessages -l ru
 
-compile_messages:
+cm:
 	django-admin compilemessages
