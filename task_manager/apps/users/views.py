@@ -1,10 +1,12 @@
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+from task_manager.apps.users.forms import CustomUserChangeForm, CustomUserCreationForm
 
 
 class UserListView(ListView):
@@ -23,7 +25,7 @@ class UserListView(ListView):
 
 
 class UserCreateView(CreateView):
-    form_class = UserCreationForm
+    form_class = CustomUserCreationForm
     template_name = "users/user_form.html"
     success_url = reverse_lazy("login")
 
@@ -35,4 +37,28 @@ class UserCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["page_title"] = _("Registration")
+        context["is_create_view"] = True
+        return context
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = CustomUserChangeForm
+    template_name = "users/user_form.html"
+    success_url = reverse_lazy("user_list")
+
+    def get_object(self, queryset=None):
+        user = super().get_object(queryset)
+        if self.request.user != user:
+            raise PermissionDenied
+        return user
+
+    def form_valid(self, form):
+        messages.success(self.request, _("User successfully updated"))
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = _("Update user")
+        context["is_create_view"] = False
         return context
