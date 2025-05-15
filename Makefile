@@ -30,10 +30,14 @@ build:
 render-start:
 	gunicorn task_manager.wsgi
 
-#_______________________________________________________________________________
+#_______________________________________________________________________________Translate
 
 ms:
 	django-admin makemessages -l ru
 
 cm:
 	django-admin compilemessages
+
+#_______________________________________________________________________________Test
+test-users:
+	uv run manage.py test task_manager.apps.users
