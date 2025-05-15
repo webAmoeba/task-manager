@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-15 03:16+0400\n"
+"POT-Creation-Date: 2025-05-15 04:18+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,6 +50,11 @@ msgstr "Вход"
 msgid "Password"
 msgstr "Пароль"
 
+#: task_manager/apps/users/templates/users/user_delete.html:8
+#, python-format
+msgid "Are you sure you want to delete %(first_name)s (%(username)s)?"
+msgstr "Вы уверены, что хотите удалить %(first_name)s (%(username)s)?"
+
 #: task_manager/apps/users/templates/users/user_form.html:7
 #: task_manager/apps/users/views.py:39
 msgid "Registration"
@@ -62,7 +67,7 @@ msgstr "Изменение пользователя"
 
 #: task_manager/apps/users/templates/users/user_form.html:39
 msgid "Required field.No more than 150 characters.Letters, numbers and symbols only "
-msgstr "Обязательное поле. Не более 150 символов. Только буквы, цифры и символы. "
+msgstr "Обязательное поле. Не более 150 символов. Только буквы, цифры и символы "
 
 #: task_manager/apps/users/templates/users/user_form.html:49
 msgid "Your password must be at least 3 characters long."
@@ -113,10 +118,12 @@ msgid "User successfully registered"
 msgstr "Пользователь успешно зарегистрирован"
 
 #: task_manager/apps/users/views.py:57
-#, fuzzy
-#| msgid "User successfully registered"
 msgid "User successfully updated"
-msgstr "Пользователь успешно зарегистрирован"
+msgstr "Пользователь успешно изменен"
+
+#: task_manager/apps/users/views.py:79
+msgid "User successfully deleted"
+msgstr "Пользователь успешно удален"
 
 #: task_manager/settings.py:152
 msgid "Task manager"

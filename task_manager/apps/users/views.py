@@ -1,12 +1,16 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
-from task_manager.apps.users.forms import CustomUserChangeForm, CustomUserCreationForm
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from task_manager.apps.users.forms import (
+    CustomUserChangeForm,
+    CustomUserCreationForm,
+)
 
 
 class UserListView(ListView):
@@ -62,3 +66,19 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         context["page_title"] = _("Update user")
         context["is_create_view"] = False
         return context
+
+
+class UserDeleteView(LoginRequiredMixin, DeleteView):
+    model = User
+    template_name = "users/user_delete.html"
+    success_url = reverse_lazy("user_list")
+
+    def get_object(self, queryset=None):
+        user = super().get_object(queryset)
+        if self.request.user != user:
+            raise PermissionDenied
+        return user
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, _("User successfully deleted"))
+        return super().delete(request, *args, **kwargs)
