@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 14:35+0400\n"
+"POT-Creation-Date: 2025-05-18 14:57+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,15 +48,15 @@ msgstr "Создать статус"
 msgid "ID"
 msgstr "ID"
 
-#: task_manager/apps/statuses/views.py:17
+#: task_manager/apps/statuses/views.py:16
 msgid "You are not authorized! Please log in."
 msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
 
-#: task_manager/apps/statuses/views.py:29 task_manager/templates/base.html:23
+#: task_manager/apps/statuses/views.py:28 task_manager/templates/base.html:23
 msgid "Statuses"
 msgstr "Статусы"
 
-#: task_manager/apps/statuses/views.py:40
+#: task_manager/apps/statuses/views.py:39
 msgid "Status created successfully"
 msgstr "Статус успешно создан"
 
@@ -96,17 +96,16 @@ msgid "Are you sure you want to delete %(first_name)s (%(username)s)?"
 msgstr "Вы уверены, что хотите удалить %(first_name)s (%(username)s)?"
 
 #: task_manager/apps/users/templates/users/user_form.html:7
-#: task_manager/apps/users/views.py:43
+#: task_manager/apps/users/views.py:50
 msgid "Registration"
 msgstr "Регистрация"
 
 #: task_manager/apps/users/templates/users/user_form.html:9
-#: task_manager/apps/users/views.py:66
+#: task_manager/apps/users/views.py:73
 msgid "Update user"
 msgstr "Изменение пользователя"
 
 #: task_manager/apps/users/templates/users/user_form.html:39
-#: постоянно нужно исправлять
 msgid "Required field.No more than 150 characters.Letters, numbers and symbols only "
 msgstr "Обязательное поле. Не более 150 символов. Только буквы, цифры и символы "
 
@@ -142,19 +141,23 @@ msgstr "Изменить"
 msgid "Delete"
 msgstr "Удалить"
 
-#: task_manager/apps/users/views.py:27 task_manager/templates/base.html:18
+#: task_manager/apps/users/views.py:19
+msgid "You are logged in"
+msgstr "Вы залогинены"
+
+#: task_manager/apps/users/views.py:34 task_manager/templates/base.html:18
 msgid "Users"
 msgstr "Пользователи"
 
-#: task_manager/apps/users/views.py:38
+#: task_manager/apps/users/views.py:45
 msgid "User successfully registered"
 msgstr "Пользователь успешно зарегистрирован"
 
-#: task_manager/apps/users/views.py:61
+#: task_manager/apps/users/views.py:68
 msgid "User successfully updated"
 msgstr "Пользователь успешно изменен"
 
-#: task_manager/apps/users/views.py:83
+#: task_manager/apps/users/views.py:90
 msgid "User successfully deleted"
 msgstr "Пользователь успешно удален"
 

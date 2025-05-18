@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
@@ -11,6 +12,12 @@ from task_manager.apps.users.forms import (
     CustomUserChangeForm,
     CustomUserCreationForm,
 )
+
+
+class CustomLoginView(LoginView):
+    def form_valid(self, form):
+        messages.success(self.request, _("You are logged in"))
+        return super().form_valid(form)
 
 
 class UserListView(ListView):

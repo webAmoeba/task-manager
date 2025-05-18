@@ -60,7 +60,7 @@
           {% for message in messages %}
             <div class="alert alert-{{ message.tags|bootstrap_message_class }} alert-dismissible fade show" role="alert">
               {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans 'Close'%}"></button>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans 'Close'%}" autofocus></button>
             </div>
           {% endfor %}
         {% endif %}
