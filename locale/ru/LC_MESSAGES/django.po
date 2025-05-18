@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 14:57+0400\n"
+"POT-Creation-Date: 2025-05-18 17:28+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,8 +21,8 @@ msgstr ""
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: task_manager/apps/statuses/models.py:6
-#: task_manager/apps/statuses/templates/statuses/status_form.html:10
-#: task_manager/apps/statuses/templates/statuses/status_form.html:11
+#: task_manager/apps/statuses/templates/statuses/status_form.html:16
+#: task_manager/apps/statuses/templates/statuses/status_form.html:17
 #: task_manager/apps/statuses/templates/statuses/status_list.html:12
 msgid "Name"
 msgstr "Имя"
@@ -33,32 +33,51 @@ msgstr "Имя"
 msgid "Date of creation"
 msgstr "Дата создания"
 
-#: task_manager/apps/statuses/templates/statuses/status_form.html:13
-#, fuzzy
-#| msgid "Create status"
-msgid "Create"
-msgstr "Создать статус"
-
+#: task_manager/apps/statuses/templates/statuses/status_form.html:7
 #: task_manager/apps/statuses/templates/statuses/status_list.html:7
+#: task_manager/apps/statuses/views.py:44
 msgid "Create status"
 msgstr "Создать статус"
+
+#: task_manager/apps/statuses/templates/statuses/status_form.html:9
+#: task_manager/apps/statuses/views.py:61
+msgid "Update status"
+msgstr "Изменение статуса"
+
+#: task_manager/apps/statuses/templates/statuses/status_form.html:21
+msgid "Create"
+msgstr "Создать"
+
+#: task_manager/apps/statuses/templates/statuses/status_form.html:23
+#: task_manager/apps/users/templates/users/user_form.html:65
+msgid "Update"
+msgstr "Изменить"
 
 #: task_manager/apps/statuses/templates/statuses/status_list.html:11
 #: task_manager/apps/users/templates/users/user_list.html:10
 msgid "ID"
 msgstr "ID"
 
-#: task_manager/apps/statuses/views.py:16
+#: task_manager/apps/statuses/templates/statuses/status_list.html:24
+#: task_manager/apps/users/templates/users/user_list.html:33
+msgid "Edit"
+msgstr "Изменить"
+
+#: task_manager/apps/statuses/views.py:17
 msgid "You are not authorized! Please log in."
 msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
 
-#: task_manager/apps/statuses/views.py:28 task_manager/templates/base.html:23
+#: task_manager/apps/statuses/views.py:29 task_manager/templates/base.html:23
 msgid "Statuses"
 msgstr "Статусы"
 
-#: task_manager/apps/statuses/views.py:39
+#: task_manager/apps/statuses/views.py:43
 msgid "Status created successfully"
 msgstr "Статус успешно создан"
+
+#: task_manager/apps/statuses/views.py:56
+msgid "Status successfully updated"
+msgstr "Статус успешно изменен"
 
 #: task_manager/apps/users/forms.py:9 task_manager/apps/users/forms.py:35
 #: task_manager/apps/users/templates/users/user_form.html:31
@@ -125,17 +144,9 @@ msgstr "Для подтверждения введите пароль ещё р�
 msgid "Register"
 msgstr "Зарегистрироваться"
 
-#: task_manager/apps/users/templates/users/user_form.html:65
-msgid "Update"
-msgstr "Изменить"
-
 #: task_manager/apps/users/templates/users/user_list.html:16
 msgid "Full name"
 msgstr "Полное имя"
-
-#: task_manager/apps/users/templates/users/user_list.html:33
-msgid "Edit"
-msgstr "Изменить"
 
 #: task_manager/apps/users/templates/users/user_list.html:35
 msgid "Delete"

@@ -5,8 +5,9 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
+from task_manager.apps.statuses.forms import StatusForm
 from task_manager.apps.statuses.models import Status
 
 
@@ -36,4 +37,30 @@ class StatusCreateView(
     template_name = "statuses/status_form.html"
     fields = ["name"]
     success_url = reverse_lazy("status_list")
-    success_message = _("Status created successfully")
+
+    def form_valid(self, form):
+        messages.success(self.request, _("Status created successfully"))
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = _("Create status")
+        context["is_create_view"] = True
+        return context
+
+
+class StatusUpdateView(LoginRequiredMixin, UpdateView):
+    model = Status
+    template_name = "statuses/status_form.html"
+    form_class = StatusForm
+    success_url = reverse_lazy("status_list")
+
+    def form_valid(self, form):
+        messages.success(self.request, _("Status successfully updated"))
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = _("Update status")
+        context["is_create_view"] = False
+        return context

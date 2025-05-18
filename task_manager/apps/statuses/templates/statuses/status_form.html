@@ -2,14 +2,25 @@
 {% load i18n %}
 
 {% block content %}
-  <h1 class="my-4">Create status</h1>
+  <h1 class="my-4">
+    {% if is_create_view %}
+      {% trans 'Create status' %}
+    {% else %}
+      {% trans 'Update status' %}
+    {% endif %}
+  </h1>
 
   <form method="post">
     {% csrf_token %}
     <div class="mb-3">
       <label class="form-label" for="id_name">{% trans 'Name' %}</label>
-      <input type="text" name="name" maxlength="100" class="form-control" placeholder="{% trans 'Name' %}" required id="id_name" />
+      <input type="text" name="name" maxlength="100" class="form-control" placeholder="{% trans 'Name' %}" required id="id_name" value="{{ form.name.value|default_if_none:'' }}" autofocus data-autofocus/>
     </div>
-    <input class="btn btn-primary" type="submit" value="{% trans 'Create' %}" />
+
+    {% if is_create_view %}
+      <input class="btn btn-primary" type="submit" value="{% trans 'Create' %}" />
+    {% else %}
+      <input class="btn btn-primary" type="submit" value="{% trans 'Update' %}" />
+    {% endif %}
   </form>
 {% endblock %}
