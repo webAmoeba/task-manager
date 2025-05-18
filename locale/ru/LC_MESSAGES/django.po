@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-18 13:45+0400\n"
+"POT-Creation-Date: 2025-05-18 14:35+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,11 +48,15 @@ msgstr "Создать статус"
 msgid "ID"
 msgstr "ID"
 
-#: task_manager/apps/statuses/views.py:18 task_manager/templates/base.html:23
+#: task_manager/apps/statuses/views.py:17
+msgid "You are not authorized! Please log in."
+msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
+
+#: task_manager/apps/statuses/views.py:29 task_manager/templates/base.html:23
 msgid "Statuses"
 msgstr "Статусы"
 
-#: task_manager/apps/statuses/views.py:27
+#: task_manager/apps/statuses/views.py:40
 msgid "Status created successfully"
 msgstr "Статус успешно создан"
 
@@ -102,6 +106,7 @@ msgid "Update user"
 msgstr "Изменение пользователя"
 
 #: task_manager/apps/users/templates/users/user_form.html:39
+#: постоянно нужно исправлять
 msgid "Required field.No more than 150 characters.Letters, numbers and symbols only "
 msgstr "Обязательное поле. Не более 150 символов. Только буквы, цифры и символы "
 
@@ -176,6 +181,10 @@ msgstr "Выход"
 #: task_manager/templates/base.html:50
 msgid "Sign up"
 msgstr "Регистрация"
+
+#: task_manager/templates/base.html:63
+msgid "Close"
+msgstr "Закрыть"
 
 #: task_manager/templatetags/custom_filters.py:13
 #, python-format

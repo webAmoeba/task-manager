@@ -44,7 +44,7 @@
               </li>
             {% else %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'login'%}">{% trans 'Login' %}</a>
+                <a class="nav-link" href="{% url 'login' %}">{% trans 'Login' %}</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'user_create' %}">{% trans 'Sign up' %}</a>
@@ -56,6 +56,15 @@
     </header>
     <main class="flex-grow-1">
       <div class="container wrapper">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags|bootstrap_message_class }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans 'Close'%}"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+
         {% block content %}
 
         {% endblock %}
