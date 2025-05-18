@@ -21,9 +21,9 @@
           <td>{{ status.name }}</td>
           <td>{{ status.date_created|date:'d.m.Y H:i' }}</td>
           <td>
-            <a href="{% url 'status_update' status.id %}">{% trans 'Edit' %}</a>
+            {% comment %} <a href="{% url 'status_update' status.id %}">{% trans 'Edit' %}</a> {% endcomment %}
             <br />
-            <a href="{% url 'status_delete' status.id %}">{% trans 'Delete' %}</a>
+            {% comment %} <a href="{% url 'status_delete' status.id %}">{% trans 'Delete' %}</a> {% endcomment %}
           </td>
         </tr>
       {% endfor %}
