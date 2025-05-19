@@ -15,3 +15,5 @@ wheels/
 *.sqlite3
 htmlcov/
 task_manager_sqlite.db
+report.html
+staticfiles

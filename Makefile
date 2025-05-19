@@ -39,6 +39,12 @@ cm:
 	django-admin compilemessages
 
 #_______________________________________________________________________________Test
+test:
+	uv run pytest --cov=task_manager
+
+cover-html:
+	uv run pytest --cov=task_manager --cov-report html
+
 test-users:
 	uv run manage.py test task_manager.apps.users
 
