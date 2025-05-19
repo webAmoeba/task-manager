@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from task_manager.apps.statuses.forms import StatusForm
 from task_manager.apps.statuses.models import Status
@@ -64,3 +64,18 @@ class StatusUpdateView(LoginRequiredMixin, UpdateView):
         context["page_title"] = _("Update status")
         context["is_create_view"] = False
         return context
+
+
+class StatusDeleteView(CustomLoginRequiredMixin, DeleteView):
+    model = Status
+    template_name = "statuses/status_delete.html"
+    success_url = reverse_lazy("status_list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = _("Deleting a status")
+        return context
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, _("Status successfully deleted"))
+        return super().delete(request, *args, **kwargs)

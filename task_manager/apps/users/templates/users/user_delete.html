@@ -2,13 +2,13 @@
 {% load i18n %}
 
 {% block content %}
-  <h1 class="my-4">Deleting a user</h1>
+  <h1 class="my-4">{{ page_title }}</h1>
 
   <p>
-    {% blocktrans with first_name=object.first_name username=object.username %}Are you sure you want to delete {{ first_name }} ({{ username }})?{% endblocktrans %}
+    {% blocktrans with first_name=object.first_name last_name=object.last_name %}Are you sure you want to delete <b>{{ first_name }} {{ last_name }}</b>?{% endblocktrans %}
   </p>
   <form method="post">
     {% csrf_token %}
-    <input class="btn btn-danger" type="submit" value="Yes, delete" />
+    <input class="btn btn-danger" type="submit" value="{% trans "Yes, delete" %}" />
   </form>
 {% endblock %}
