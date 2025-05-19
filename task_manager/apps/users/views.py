@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
@@ -18,6 +18,12 @@ class CustomLoginView(LoginView):
     def form_valid(self, form):
         messages.success(self.request, _("You are logged in"))
         return super().form_valid(form)
+
+
+class CustomLogoutView(LogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        messages.info(request, _("You are logged out"))
+        return super().dispatch(request, *args, **kwargs)
 
 
 class UserListView(ListView):
@@ -89,7 +95,7 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, _("User successfully deleted"))
         return super().delete(request, *args, **kwargs)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["page_title"] = _("Deleting a user")

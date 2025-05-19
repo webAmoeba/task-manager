@@ -16,11 +16,10 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
 from task_manager import views
-from task_manager.apps.users.views import CustomLoginView
+from task_manager.apps.users.views import CustomLoginView, CustomLogoutView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -31,7 +30,7 @@ urlpatterns = [
         CustomLoginView.as_view(template_name="users/login.html"),
         name="login",
     ),
-    path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("logout/", CustomLogoutView.as_view(), name="logout"),
 
     path("statuses/", include("task_manager.apps.statuses.urls")),
 ]

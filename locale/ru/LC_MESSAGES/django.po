@@ -228,3 +228,7 @@ msgstr "МЗ: %(value)s"
 
 #~ msgid "Main"
 #~ msgstr "Главная"
+
+#: task_manager/apps/users/views.py:25
+msgid "You are logged out"
+msgstr "Вы разлогинены"

@@ -49,7 +49,7 @@ class StatusCreateView(
         return context
 
 
-class StatusUpdateView(LoginRequiredMixin, UpdateView):
+class StatusUpdateView(CustomLoginRequiredMixin, UpdateView):
     model = Status
     template_name = "statuses/status_form.html"
     form_class = StatusForm
