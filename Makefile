@@ -41,3 +41,6 @@ cm:
 #_______________________________________________________________________________Test
 test-users:
 	uv run manage.py test task_manager.apps.users
+
+test-statuses:
+	uv run manage.py test task_manager.apps.statuses

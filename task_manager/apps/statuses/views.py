@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.http import urlencode
 from django.utils.translation import gettext as _
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -16,7 +17,9 @@ class CustomLoginRequiredMixin(LoginRequiredMixin):
         messages.error(
             self.request, _("You are not authorized! Please log in.")
         )
-        return redirect(self.get_login_url())
+        path = self.request.get_full_path()
+        login_url = self.get_login_url()
+        return redirect(f"{login_url}?{urlencode({'next': path})}")
 
 
 class StatusListView(CustomLoginRequiredMixin, ListView):
