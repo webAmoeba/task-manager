@@ -24,6 +24,10 @@ migrate:
 	python manage.py migrate
 	python manage.py shell < create_superuser.py
 
+dev-migrate:
+	uv run manage.py makemigrations
+	uv run manage.py migrate
+
 build:
 	./build.sh
 
