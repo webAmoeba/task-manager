@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-21 17:50+0400\n"
+"POT-Creation-Date: 2025-05-21 19:49+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,7 @@ msgid "Are you sure you want to delete the status"
 msgstr "Вы уверены, что хотите удалить статус"
 
 #: task_manager/apps/statuses/templates/statuses/status_delete.html:13
+#: task_manager/apps/tasks/templates/tasks/task_delete.html:10
 #: task_manager/apps/users/templates/users/user_delete.html:12
 msgid "Yes, delete"
 msgstr "Да, удалить"
@@ -69,11 +70,13 @@ msgid "ID"
 msgstr "ID"
 
 #: task_manager/apps/statuses/templates/statuses/status_list.html:24
+#: task_manager/apps/tasks/templates/tasks/task_list.html:71
 #: task_manager/apps/users/templates/users/user_list.html:33
 msgid "Edit"
 msgstr "Изменить"
 
 #: task_manager/apps/statuses/templates/statuses/status_list.html:26
+#: task_manager/apps/tasks/templates/tasks/task_list.html:73
 #: task_manager/apps/users/templates/users/user_list.html:35
 msgid "Delete"
 msgstr "Удалить"
@@ -110,6 +113,10 @@ msgstr "Статус успешно удален"
 msgid "Task with this name already exists."
 msgstr "Задача с таким именем уже существует."
 
+#: task_manager/apps/tasks/templates/tasks/task_delete.html:7
+msgid "Are you sure you want to delete the task?"
+msgstr "Вы уверены, что хотите удалить задачу"
+
 #: task_manager/apps/tasks/templates/tasks/task_form.html:21
 #: task_manager/apps/tasks/templates/tasks/task_form.html:26
 msgid "Description"
@@ -128,7 +135,7 @@ msgid "Executor"
 msgstr "Исполнитель"
 
 #: task_manager/apps/tasks/templates/tasks/task_list.html:7
-#: task_manager/apps/tasks/views.py:37
+#: task_manager/apps/tasks/views.py:42
 msgid "Create task"
 msgstr "Создать задачу"
 
@@ -148,9 +155,21 @@ msgstr "Показать"
 msgid "Author"
 msgstr "Автор"
 
-#: task_manager/apps/tasks/views.py:21 task_manager/templates/base.html:29
+#: task_manager/apps/tasks/views.py:26 task_manager/templates/base.html:29
 msgid "Tasks"
 msgstr "Задачи"
+
+#: task_manager/apps/tasks/views.py:57
+msgid "Edit task"
+msgstr "Изменить задачу"
+
+#: task_manager/apps/tasks/views.py:107
+msgid "Task successfully deleted"
+msgstr "Задача успешно удалена"
+
+#: task_manager/apps/tasks/views.py:114
+msgid "Deleting a task"
+msgstr "Удаление задачи"
 
 #: task_manager/apps/users/forms.py:9 task_manager/apps/users/forms.py:35
 #: task_manager/apps/users/templates/users/user_form.html:25

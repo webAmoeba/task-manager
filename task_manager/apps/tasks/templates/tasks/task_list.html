@@ -67,9 +67,11 @@
           <td>{{ task.executor|default_if_none:"" }}</td>
           <td>{{ task.created_at|date:'d.m.Y H:i' }}</td>
           <td>
-            {% comment %} <a href="{% url 'task_update' task.id %}">{% trans 'Edit' %}</a> {% endcomment %}
+            {% if task.author == request.user %}
+            <a href="{% url 'task_update' task.id %}">{% trans 'Edit' %}</a>
             <br />
-            {% comment %} <a href="{% url 'task_delete' task.id %}">{% trans 'Delete' %}</a> {% endcomment %}
+            <a href="{% url 'task_delete' task.id %}">{% trans 'Delete' %}</a>
+            {% endif %}
           </td>
         </tr>
       {% endfor %}

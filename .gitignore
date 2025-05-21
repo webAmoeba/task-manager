@@ -17,3 +17,5 @@ htmlcov/
 task_manager_sqlite.db
 report.html
 staticfiles
+scripts/
+task_manager/management/
