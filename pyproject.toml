@@ -15,6 +15,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "coverage>=7.8.0",
+    "djlint>=1.36.4",
     "dotenv>=0.9.9",
     "pytest>=8.3.5",
     "pytest-cov>=6.1.1",
