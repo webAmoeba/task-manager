@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+  <h1 class="my-4">{{ page_title }}</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label" for="id_name">{% trans 'Name' %}</label>
+      <input type="text" name="name" maxlength="150" class="form-control" placeholder="{% trans 'Name' %}" required id="id_name" />
+      {% if form.name.errors %}
+        <div class="invalid-feedback">{{ form.name.errors.0 }}</div>
+      {% endif %}
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id_description">{% trans 'Description' %}</label><textarea name="description" cols="40" rows="10" class="form-control" placeholder="{% trans 'Description' %}" id="id_description"></textarea>
+    </div>
+
+    {% comment %}Status{% endcomment %}
+    <div class="mb-3">
+      <label class="form-label" for="id_status">{% trans 'Status' %}</label>
+      <select name="status" class="form-select" required id="id_status">
+        {% comment %} <option value="" selected>---------</option> {% endcomment %}
+        <option value="" {% if not form.status.value %}selected{% endif %}>---------</option>
+        {% for status in statuses %}
+          <option value="{{ status.id }}" {% if status.id|stringformat:"s" == form.status.value|stringformat:"s" %}selected{% endif %}>
+            {{ status.name }}
+          </option>
+        {% endfor %}
+      </select>
+      {% if form.status.errors %}
+        <div class="text-danger">{{ form.status.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    {% comment %}Executor{% endcomment %}
+    <div class="mb-3">
+      <label class="form-label" for="id_executor">{% trans 'Executor' %}</label>
+      <select name="executor" class="form-select" id="id_executor">
+        {% comment %} <option value="" selected>---------</option> {% endcomment %}
+        <option value="" {% if not form.executor.value %}selected{% endif %}>---------</option>
+        {% for user in executors %}
+          <option value="{{ user.id }}" {% if user.id|stringformat:"s" == form.executor.value|stringformat:"s" %}selected{% endif %}>
+            {{ user.get_full_name|default:user.username }}
+          </option>
+        {% endfor %}
+      </select>
+      {% if form.executor.errors %}
+        <div class="text-danger">{{ form.executor.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    {% if is_create_view %}
+      <input class="btn btn-primary" type="submit" value="{% trans 'Create' %}" />
+    {% else %}
+      <input class="btn btn-primary" type="submit" value="{% trans 'Update' %}" />
+    {% endif %}
+  </form>
+{% endblock %}

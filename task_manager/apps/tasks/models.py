@@ -1,32 +1,24 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from task_manager.apps.statuses.models import Status
-
 User = get_user_model()
 
 
 class Task(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=150, unique=True)
     description = models.TextField(blank=True)
-    status = models.ForeignKey(
-        Status, on_delete=models.PROTECT, verbose_name="Status"
-    )
-    author = models.ForeignKey(
-        User,
-        on_delete=models.PROTECT,
-        related_name="authored_tasks",
-        verbose_name="Author",
-    )
+    status = models.ForeignKey("statuses.Status", on_delete=models.PROTECT)
     executor = models.ForeignKey(
         User,
-        on_delete=models.PROTECT,
-        related_name="executed_tasks",
-        blank=True,
+        on_delete=models.SET_NULL,
         null=True,
-        verbose_name="Executor",
+        blank=True,
+        related_name="executed_tasks",
     )
-    date_created = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="authored_tasks"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name

@@ -2,13 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-  <h1 class="my-4">
-    {% if is_create_view %}
-      {% trans 'Registration' %}
-    {% else %}
-      {% trans 'Update user' %}
-    {% endif %}
-  </h1>
+  <h1 class="my-4">{{ page_title }}</h1>
 
   {% if form.errors %}
     <div class="alert alert-danger">
