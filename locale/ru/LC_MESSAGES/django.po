@@ -93,6 +93,14 @@ msgstr "Статусы"
 msgid "Status created successfully"
 msgstr "Статус успешно создан"
 
+#: task_manager/apps/statuses/views.py:46
+msgid "Task created successfully"
+msgstr "Задача успешно создана"
+
+#: task_manager/apps/statuses/views.py:46
+msgid "Task successfully updated"
+msgstr "Задача успешно изменена"
+
 #: task_manager/apps/statuses/views.py:63
 msgid "Status successfully updated"
 msgstr "Статус успешно изменен"
@@ -167,7 +175,7 @@ msgstr "Задачи"
 msgid "Edit task"
 msgstr "Изменить задачу"
 
-#: task_manager/apps/tasks/views.py:74
+#: task_manager/apps/tasks/views.py:90
 msgid "Task successfully deleted"
 msgstr "Задача успешно удалена"
 

@@ -3,11 +3,12 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.utils.translation import gettext as _
-from django.views.generic import CreateView, DeleteView, ListView
-from django.views.generic.edit import UpdateView
+from django.utils.http import urlencode
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from task_manager.apps.statuses.models import Status
 from task_manager.apps.tasks.forms import TaskForm
@@ -16,7 +17,17 @@ from task_manager.apps.tasks.models import Task
 User = get_user_model()
 
 
-class TaskListView(LoginRequiredMixin, ListView):
+class CustomLoginRequiredMixin(LoginRequiredMixin):
+    def handle_no_permission(self):
+        messages.error(
+            self.request, _("You are not authorized! Please log in.")
+        )
+        path = self.request.get_full_path()
+        login_url = self.get_login_url()
+        return redirect(f"{login_url}?{urlencode({'next': path})}")
+
+
+class TaskListView(CustomLoginRequiredMixin, ListView):
     model = Task
     context_object_name = "tasks"
     template_name = "tasks/task_list.html"
@@ -27,7 +38,7 @@ class TaskListView(LoginRequiredMixin, ListView):
         return context
 
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(CustomLoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = "tasks/task_form.html"
@@ -35,6 +46,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        messages.success(self.request, _("Task created successfully"))
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -46,11 +58,21 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(CustomLoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = "tasks/task_form.html"
     success_url = reverse_lazy("task_list")
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.author != request.user:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        messages.success(self.request, _("Task successfully updated"))
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -60,37 +82,8 @@ class TaskUpdateView(UpdateView):
         context["executors"] = context["form"].fields["executor"].queryset
         return context
 
-    def dispatch(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if obj.author != request.user:
-            raise PermissionDenied
-        return super().dispatch(request, *args, **kwargs)
 
-
-# class TaskDeleteView(DeleteView):
-#     model = Task
-#     template_name = "tasks/task_delete.html"
-#     success_url = reverse_lazy("task_list")
-
-#     def dispatch(self, request, *args, **kwargs):
-#         obj = self.get_object()
-#         if obj.author != request.user:
-#             raise PermissionDenied
-#         return super().dispatch(request, *args, **kwargs)
-
-#     def delete(self, request, *args, **kwargs):
-#         obj = self.get_object()
-#         success_url = self.get_success_url()
-#         messages.success(self.request, _("asdf"))
-#         obj.delete()
-#         return HttpResponseRedirect(success_url)
-
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context["page_title"] = _("Deleting a task")
-#         return context
-class TaskDeleteView(SuccessMessageMixin, DeleteView):
+class TaskDeleteView(CustomLoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Task
     template_name = "tasks/task_delete.html"
     success_url = reverse_lazy("task_list")
@@ -101,13 +94,6 @@ class TaskDeleteView(SuccessMessageMixin, DeleteView):
         if obj.author != request.user:
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        success_url = self.get_success_url()
-        messages.success(self.request, self.success_message)
-        self.object.delete()
-        return HttpResponseRedirect(success_url)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

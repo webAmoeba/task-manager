@@ -5,7 +5,7 @@ from django.db.models.deletion import ProtectedError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.http import urlencode
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
@@ -70,10 +70,13 @@ class StatusUpdateView(CustomLoginRequiredMixin, UpdateView):
         return context
 
 
-class StatusDeleteView(CustomLoginRequiredMixin, DeleteView):
+class StatusDeleteView(
+    CustomLoginRequiredMixin, SuccessMessageMixin, DeleteView
+):
     model = Status
     template_name = "statuses/status_delete.html"
     success_url = reverse_lazy("status_list")
+    success_message = _("Status successfully deleted")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -89,7 +92,3 @@ class StatusDeleteView(CustomLoginRequiredMixin, DeleteView):
                 _("It is not possible to delete a status because it is in use"),
             )
             return redirect(self.success_url)
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, _("Status successfully deleted"))
-        return super().delete(request, *args, **kwargs)
