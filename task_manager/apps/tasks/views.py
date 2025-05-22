@@ -32,9 +32,29 @@ class TaskListView(CustomLoginRequiredMixin, ListView):
     context_object_name = "tasks"
     template_name = "tasks/task_list.html"
 
+    def get_queryset(self):
+        queryset = Task.objects.select_related("status", "author", "executor")
+        status = self.request.GET.get("status")
+        executor = self.request.GET.get("executor")
+        label = self.request.GET.get("label")
+        self_tasks = self.request.GET.get("self_tasks")
+
+        if status:
+            queryset = queryset.filter(status_id=status)
+        if executor:
+            queryset = queryset.filter(executor_id=executor)
+        if label:
+            queryset = queryset.filter(labels__id=label)
+        if self_tasks:
+            queryset = queryset.filter(author=self.request.user)
+
+        return queryset.distinct().order_by("id")
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["page_title"] = _("Tasks")
+        context["statuses"] = Status.objects.all()
+        context["users"] = get_user_model().objects.all()
         return context
 
 

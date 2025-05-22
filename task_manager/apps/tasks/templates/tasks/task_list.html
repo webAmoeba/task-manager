@@ -13,6 +13,12 @@
           <label class="form-label" for="id_status">{% trans 'Status' %}</label>
           <select name="status" class="form-select ml-2 mr-3" id="id_status">
             <option value="" selected>---------</option>
+            {% for status in statuses %}
+              <option value="{{ status.id }}"
+                      {% if request.GET.status == status.id|stringformat:"s" %}selected{% endif %}>
+                {{ status.name }}
+              </option>
+            {% endfor %}
           </select>
         </div>
 
@@ -20,6 +26,12 @@
           <label class="form-label" for="id_executor">{% trans 'Executor' %}</label>
           <select name="executor" class="form-select mr-3 ml-2" id="id_executor">
             <option value="" selected>---------</option>
+            {% for user in users %}
+              <option value="{{ user.id }}"
+                      {% if request.GET.executor == user.id|stringformat:"s" %}selected{% endif %}>
+                {{ user.first_name }} {{ user.last_name }} ({{ user.username }})
+              </option>
+            {% endfor %}
           </select>
         </div>
 
@@ -34,7 +46,8 @@
             <input type="checkbox"
                    name="self_tasks"
                    class="form-check-input mr-3"
-                   id="id_self_tasks" />
+                   id="id_self_tasks"
+                   {% if filters.self_tasks %}checked{% endif %} />
             <label class="form-check-label" for="id_self_tasks">{% trans 'Only my tasks' %}</label>
           </div>
         </div>
@@ -68,9 +81,9 @@
           <td>{{ task.created_at|date:'d.m.Y H:i' }}</td>
           <td>
             {% if task.author == request.user %}
-            <a href="{% url 'task_update' task.id %}">{% trans 'Edit' %}</a>
-            <br />
-            <a href="{% url 'task_delete' task.id %}">{% trans 'Delete' %}</a>
+              <a href="{% url 'task_update' task.id %}">{% trans 'Edit' %}</a>
+              <br />
+              <a href="{% url 'task_delete' task.id %}">{% trans 'Delete' %}</a>
             {% endif %}
           </td>
         </tr>
