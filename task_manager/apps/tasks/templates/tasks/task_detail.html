@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+  <h1 class="my-4">{{ page_title }}</h1>
+
+  <div class="card">
+    <div class="card-header bg-secondary text-white">
+      <h2>{{ task.name }}</h2>
+    </div>
+    <div class="card-body bg-light">
+      <p>{{ task.description }}</p>
+      <hr>
+      <div class="container">
+        <div class="row p-1">
+          <div class="col">{% trans 'Author' %}</div>
+          <div class="col">{{ task.author.get_full_name }} ({{ task.author.username }})</div>
+        </div>
+        <div class="row p-1">
+          <div class="col">{% trans 'Executor' %}</div>
+          <div class="col">
+            {% if task.executor %}
+              {{ task.executor.get_full_name }} ({{ task.executor.username }})
+            {% else %}
+              —
+            {% endif %}
+          </div>
+        </div>
+        <div class="row p-1">
+          <div class="col">{% trans 'Status' %}</div>
+          <div class="col">{{ task.status.name }}</div>
+        </div>
+        <div class="row p-1">
+          <div class="col">{% trans 'Date of creation' %}</div>
+          <div class="col">{{ task.created_at|date:'d.m.Y H:i' }}</div>
+        </div>
+        <div class="row p-1">
+          <div class="col">
+            <h6>{% trans 'Labels' %}:</h6>
+            <ul>
+
+              {% comment %} todo: add labels {% endcomment %}
+              {% comment %} <li>{{ task.label.name }}</li> {% endcomment %}
+
+            </ul>
+          </div>
+        </div>
+        {% if task.author == request.user %}
+          <div class="row p-1">
+            <div class="col">
+              <a href="{% url 'task_update' task.id %}">{% trans 'Edit' %}</a>
+              <br />
+              <a href="{% url 'task_delete' task.id %}">{% trans 'Delete' %}</a>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

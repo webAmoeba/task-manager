@@ -3,6 +3,7 @@ from django.urls import path
 from task_manager.apps.tasks.views import (
     TaskCreateView,
     TaskDeleteView,
+    TaskDetailView,
     TaskListView,
     TaskUpdateView,
 )
@@ -14,4 +15,5 @@ urlpatterns = [
         "<int:pk>/update/", TaskUpdateView.as_view(), name="task_update"
     ),
     path('<int:pk>/delete/', TaskDeleteView.as_view(), name='task_delete'),
+    path("<int:pk>/", TaskDetailView.as_view(), name="task_detail"),
 ]

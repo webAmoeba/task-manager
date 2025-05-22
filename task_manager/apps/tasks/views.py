@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from task_manager.apps.statuses.models import Status
@@ -118,4 +119,15 @@ class TaskDeleteView(CustomLoginRequiredMixin, SuccessMessageMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["page_title"] = _("Deleting a task")
+        return context
+
+
+class TaskDetailView(DetailView):
+    model = Task
+    template_name = "tasks/task_detail.html"
+    context_object_name = "task"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = _("View task")
         return context
