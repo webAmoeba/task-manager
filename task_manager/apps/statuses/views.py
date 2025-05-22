@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models.deletion import ProtectedError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.http import urlencode
@@ -78,6 +79,16 @@ class StatusDeleteView(CustomLoginRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context["page_title"] = _("Deleting a status")
         return context
+
+    def post(self, request, *args, **kwargs):
+        try:
+            return super().post(request, *args, **kwargs)
+        except ProtectedError:
+            messages.error(
+                self.request,
+                _("It is not possible to delete a status because it is in use"),
+            )
+            return redirect(self.success_url)
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, _("Status successfully deleted"))
