@@ -379,3 +379,10 @@ msgstr "МЗ: %(value)s"
 
 #~ msgid "Main"
 #~ msgstr "Главная"
+
+msgid "Greetings from Hexlet!"
+msgstr "Привет от Хекслета!"
+msgid "Practical programming courses"
+msgstr "Практические курсы по программированию"
+msgid "Find out more"
+msgstr "Узнать больше"

@@ -23,7 +23,7 @@ from task_manager.apps.users.views import CustomLoginView, CustomLogoutView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.index),
+    path("", views.index, name="index"),
     path("users/", include("task_manager.apps.users.urls")),
     path(
         "login/",
