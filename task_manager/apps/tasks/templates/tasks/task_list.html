@@ -38,7 +38,13 @@
         <div class="mb-3">
           <label class="form-label" for="id_label">{% trans 'Label' %}</label>
           <select name="label" class="form-select mr-3 ml-2" id="id_label">
-            <option value="" selected>---------</option>
+            <option value="" {% if not request.GET.label %}selected{% endif %}>---------</option>
+            {% for label in labels %}
+              <option value="{{ label.id }}"
+                      {% if label.id|stringformat:"s" == request.GET.label %}selected{% endif %}>
+                {{ label.name }}
+              </option>
+            {% endfor %}
           </select>
         </div>
         <div class="mb-3">

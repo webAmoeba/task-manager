@@ -59,6 +59,7 @@ class TaskListView(CustomLoginRequiredMixin, ListView):
         context["page_title"] = _("Tasks")
         context["statuses"] = Status.objects.all()
         context["users"] = get_user_model().objects.all()
+        context["labels"] = Label.objects.all()
         return context
 
 
