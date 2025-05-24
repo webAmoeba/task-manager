@@ -68,6 +68,22 @@
         {% endfor %}
       </select>
     </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="id_labels">{% trans 'Labels' %}</label>
+      <select name="labels"
+              class="form-select {% if form.executor.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
+              id="id_labels"
+              multiple>
+        {% for label in labels %}
+          <option value="{{ label.id }}"
+                  {% if label.id|stringformat:"s" in form.labels.value|stringformat:"s" %}selected{% endif %}>
+            {{ label.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
     {% if is_create_view %}
       <input class="btn btn-primary" type="submit" value="{% trans 'Create' %}" />
     {% else %}

@@ -4,13 +4,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
+from task_manager.apps.labels.models import Label
 from task_manager.apps.statuses.models import Status
 from task_manager.apps.tasks.forms import TaskForm
 from task_manager.apps.tasks.models import Task
@@ -34,7 +35,9 @@ class TaskListView(CustomLoginRequiredMixin, ListView):
     template_name = "tasks/task_list.html"
 
     def get_queryset(self):
-        queryset = Task.objects.select_related("status", "author", "executor")
+        queryset = Task.objects.select_related(
+            "status", "author", "executor"
+        ).prefetch_related("labels")
         status = self.request.GET.get("status")
         executor = self.request.GET.get("executor")
         label = self.request.GET.get("label")
@@ -76,6 +79,7 @@ class TaskCreateView(CustomLoginRequiredMixin, SuccessMessageMixin, CreateView):
         context["is_create_view"] = True
         context["statuses"] = Status.objects.all()
         context["executors"] = User.objects.all()
+        context["labels"] = Label.objects.all()
         return context
 
 
@@ -83,7 +87,6 @@ class TaskUpdateView(CustomLoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = "tasks/task_form.html"
-    success_url = reverse_lazy("task_list")
 
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -95,12 +98,16 @@ class TaskUpdateView(CustomLoginRequiredMixin, UpdateView):
         messages.success(self.request, _("Task successfully updated"))
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse("task_detail", kwargs={"pk": self.object.pk})
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["page_title"] = _("Edit task")
         context["is_create_view"] = False
-        context["statuses"] = context["form"].fields["status"].queryset
-        context["executors"] = context["form"].fields["executor"].queryset
+        context["statuses"] = Status.objects.all()
+        context["executors"] = User.objects.all()
+        context["labels"] = Label.objects.all()
         return context
 
 

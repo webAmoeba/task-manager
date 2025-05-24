@@ -7,7 +7,7 @@ from task_manager.apps.tasks.models import Task
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ["name", "description", "status", "executor"]
+        fields = ["name", "description", "status", "executor", "labels"]
 
     def clean_name(self):
         name = self.cleaned_data["name"]

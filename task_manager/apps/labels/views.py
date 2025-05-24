@@ -84,11 +84,13 @@ class LabelDeleteView(
         return context
 
     def post(self, request, *args, **kwargs):
-        try:
-            return super().post(request, *args, **kwargs)
-        except ProtectedError:
+        self.object = self.get_object()
+        if self.object.tasks.exists():  # Проверка связей
             messages.error(
-                self.request,
+                request,
                 _("It is not possible to delete a label, because it is in use"),
             )
             return redirect(self.success_url)
+
+        messages.success(request, self.success_message)
+        return super().post(request, *args, **kwargs)
