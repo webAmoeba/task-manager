@@ -38,8 +38,8 @@ class StatusCreateView(
     CustomLoginRequiredMixin, SuccessMessageMixin, CreateView
 ):
     model = Status
+    form_class = StatusForm
     template_name = "statuses/status_form.html"
-    fields = ["name"]
     success_url = reverse_lazy("status_list")
 
     def form_valid(self, form):

@@ -2,15 +2,35 @@
 {% load i18n %}
 
 {% block content %}
-  <h1 class="my-4">
-    {{ page_title }}
-  </h1>
+  {% comment %} for non-standart errors {% endcomment %}
+  {% if form.non_field_errors %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {% for error in form.non_field_errors %}<div>{{ error }}</div>{% endfor %}
+      <button type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="{% trans 'Close' %}"
+              autofocus></button>
+    </div>
+  {% endif %}
+
+  <h1 class="my-4">{{ page_title }}</h1>
 
   <form method="post">
     {% csrf_token %}
     <div class="mb-3">
       <label class="form-label" for="id_name">{% trans 'Name' %}</label>
-      <input type="text" name="name" maxlength="100" class="form-control" placeholder="{% trans 'Name' %}" required id="id_name" value="{{ form.name.value|default_if_none:'' }}" autofocus data-autofocus/>
+      <input type="text"
+             name="name"
+             maxlength="100"
+             class="form-control {% if form.name.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
+             placeholder="{% trans 'Name' %}"
+             required
+             id="id_name"
+             value="{{ form.name.value|default_if_none:'' }}"
+             autofocus
+             data-autofocus />
+      {% for error in form.name.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
     </div>
 
     {% if is_create_view %}

@@ -2,6 +2,18 @@
 {% load i18n %}
 
 {% block content %}
+  {% comment %} for non-standart errors {% endcomment %}
+  {% if form.non_field_errors %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {% for error in form.non_field_errors %}<div>{{ error }}</div>{% endfor %}
+      <button type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="{% trans 'Close' %}"
+              autofocus></button>
+    </div>
+  {% endif %}
+
   <h1 class="my-4">{{ page_title }}</h1>
   <form method="post">
     {% csrf_token %}
@@ -13,8 +25,8 @@
              class="form-control {% if form.name.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
              placeholder="{% trans 'Name' %}"
              required
-             id="id_name" 
-             value="{{ form.name.value|default_if_none:'' }}"/>
+             id="id_name"
+             value="{{ form.name.value|default_if_none:'' }}" />
       {% for error in form.name.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
     </div>
     <div class="mb-3">
@@ -25,6 +37,7 @@
                 class="form-control {% if form.description.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
                 placeholder="{% trans 'Description' %}"
                 id="id_description"></textarea>
+      {% for error in form.name.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
     </div>
     <div class="mb-3">
       <label class="form-label" for="id_status">{% trans 'Status' %}</label>
