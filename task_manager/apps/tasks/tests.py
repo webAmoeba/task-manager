@@ -2,8 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-# todo: add tests with labels
-# from task_manager.apps.labels.models import Label
+from task_manager.apps.labels.models import Label
 from task_manager.apps.statuses.models import Status
 from task_manager.apps.tasks.models import Task
 
@@ -17,7 +16,7 @@ class TaskCRUDTests(TestCase):
             username="executor", password="pass"
         )
         self.status = Status.objects.create(name="In Progress")
-        # self.label = Label.objects.create(name="Bug")
+        self.label = Label.objects.create(name="Bug")
         self.task = Task.objects.create(
             name="Fix bug",
             description="Critical issue",
@@ -40,7 +39,7 @@ class TaskCRUDTests(TestCase):
                 "description": "Do something",
                 "status": self.status.id,
                 "executor": self.executor.id,
-                # "labels": [self.label.id],
+                "labels": [self.label.id],
             },
             follow=True,
         )
@@ -56,7 +55,7 @@ class TaskCRUDTests(TestCase):
                 "description": "Updated desc",
                 "status": self.status.id,
                 "executor": self.executor.id,
-                # "labels": [self.label.id],
+                "labels": [self.label.id],
             },
             follow=True,
         )
