@@ -89,6 +89,6 @@ class StatusDeleteView(
         except ProtectedError:
             messages.error(
                 self.request,
-                _("It is not possible to delete a status because it is in use"),
+                _("It is not possible to delete a status, because it is in use"),
             )
             return redirect(self.success_url)
