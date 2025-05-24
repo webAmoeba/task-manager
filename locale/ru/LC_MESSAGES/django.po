@@ -301,8 +301,8 @@ msgid "Required field.No more than 150 characters.Letters, numbers and symbols o
 msgstr "Обязательное поле. Не более 150 символов. Только буквы, цифры и символы "
 
 #: task_manager/apps/users/templates/users/user_form.html:43
-msgid "Your password must be at least 3 characters long."
-msgstr "Ваш пароль должен содержать не менее 3 символов."
+msgid "Your password must be at least 8 characters long."
+msgstr "Ваш пароль должен содержать не менее 8 символов."
 
 #: task_manager/apps/users/templates/users/user_form.html:49
 msgid "Confirm password"
@@ -386,3 +386,5 @@ msgid "Practical programming courses"
 msgstr "Практические курсы по программированию"
 msgid "Find out more"
 msgstr "Узнать больше"
+msgid "This password is too short. It must contain at least 8 characters."
+msgstr "Этот пароль слишком короткий. Он должен содержать не менее 8 символов."

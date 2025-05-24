@@ -2,54 +2,145 @@
 {% load i18n %}
 
 {% block content %}
-  <h1 class="my-4">{{ page_title }}</h1>
-
-  {% if form.errors %}
-    <div class="alert alert-danger">
-      <ul>
-        {% for field in form %}
-          {% for error in field.errors %}
-            <li>{{ error }}</li>
-          {% endfor %}
-        {% endfor %}
-        {% for error in form.non_field_errors %}
-          <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
+  {% comment %} for non-standart errors {% endcomment %}
+  {% if form.non_field_errors %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {% for error in form.non_field_errors %}<div>{{ error }}</div>{% endfor %}
+      <button type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="{% trans 'Close' %}"
+              autofocus></button>
     </div>
   {% endif %}
+
+  <h1 class="my-4">{{ page_title }}</h1>
 
   <form method="post">
     {% csrf_token %}
     <div class="mb-3">
-      <label class="form-label" for="id_first_name">{% trans 'First name' %}</label><input type="text" name="first_name" maxlength="150" class="form-control" placeholder="{% trans 'First name' %}" required id="id_first_name" autofocus value="{{ form.first_name.value|default_if_none:'' }}" />
+      <label class="form-label" for="id_first_name">{% trans 'First name' %}</label>
+      <input type="text"
+             name="first_name"
+             maxlength="150"
+             class="form-control {% if form.first_name.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
+             placeholder="{% trans 'First name' %}"
+             required
+             id="id_first_name"
+             {% if is_create_view %}autofocus{% endif %}
+             value="{{ form.first_name.value|default_if_none:'' }}"
+             {% if form.first_name.errors %}data-autofocus{% endif %} />
+      {% for error in form.first_name.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
     </div>
     <div class="mb-3">
-      <label class="form-label" for="id_last_name">{% trans 'Last name' %}</label><input type="text" name="last_name" maxlength="150" class="form-control" placeholder="{% trans 'Last name' %}" required id="id_last_name" value="{{ form.last_name.value|default_if_none:'' }}" />
+      <label class="form-label" for="id_last_name">{% trans 'Last name' %}</label>
+      <input type="text"
+             name="last_name"
+             maxlength="150"
+             class="form-control {% if form.last_name.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
+             placeholder="{% trans 'Last name' %}"
+             required
+             id="id_last_name"
+             value="{{ form.last_name.value|default_if_none:'' }}"
+             {% if form.last_name.errors %}data-autofocus{% endif %} />
+      {% for error in form.last_name.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
     </div>
+
+    {% comment %} username {% endcomment %}
     <div class="mb-3">
-      <label class="form-label" for="id_username">{% trans 'Username' %}</label><input type="text" name="username" maxlength="150" class="form-control" placeholder="{% trans 'Username' %}" required aria-describedby="id_username_helptext" id="id_username" value="{{ form.username.value|default_if_none:'' }}" />
+      <label class="form-label" for="id_username">{% trans 'Username' %}</label>
+      <input type="text"
+             name="username"
+             maxlength="150"
+             class="form-control {% if form.username.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
+             placeholder="{% trans 'Username' %}"
+             required
+             aria-describedby="id_username_helptext"
+             id="id_username"
+             value="{{ form.username.value|default_if_none:'' }}"
+             {% if form.username.errors %}data-autofocus{% endif %}
+             autocomplete="username" />
+      {% for error in form.username.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
       <div class="form-text">
-        {% trans 'Required field.No more than 150 characters.Letters, numbers and symbols only ' %}@/./+/-/_.
+        {% if is_create_view %}
+          {% trans 'Required field.No more than 150 characters.Letters, numbers and symbols only ' %}@/./+/-/_.
+        {% else %}
+          {% trans 'No more than 150 characters.Letters, numbers and symbols only ' %}@/./+/-/_.
+        {% endif %}
       </div>
     </div>
 
+    {% comment %} passwords {% endcomment %}
+    {% if not is_create_view %}
+      <input type="hidden"
+             name="current_username"
+             value="{{ form.current_username.value|default_if_none:'' }}" />
+
+      <div class="mb-3">
+        <label class="form-label" for="id_current_password">{% trans 'Current password' %}</label>
+        <input type="password"
+               name="current_password"
+               class="form-control {% if form.current_password.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
+               placeholder="{% trans 'Current password' %}"
+               required
+               id="id_current_password"
+               value="{{ form.current_password.value|default_if_none:'' }}"
+               {% if form.current_password.errors %}data-autofocus{% endif %}
+               autocomplete="current-password" />
+        {% for error in form.current_password.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
+      </div>
+    {% endif %}
+
     {% if is_create_view %}
       <div class="mb-3">
-        <label class="form-label" for="id_password1">{% trans 'Password' %}</label><input type="password" name="password1" autocomplete="new-password" class="form-control" placeholder="{% trans 'Password' %}" aria-describedby="id_password1_helptext" id="id_password1" />
-        <div class="form-text">
-          <ul>
-            <li>
-              {% trans 'Your password must be at least 3 characters long.' %}
-            </li>
-          </ul>
-        </div>
+        <label class="form-label" for="id_password1">{% trans 'Password' %}</label>
+        <input type="password"
+               name="password1"
+               autocomplete="new-password"
+               class="form-control {% if form.password1.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
+               placeholder="{% trans 'Password' %}"
+               aria-describedby="id_password1_helptext"
+               {% if form.password1.errors %}data-autofocus{% endif %}
+               id="id_password1" />
+        {% for error in form.password1.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
+        <div class="form-text">{% trans 'Your password must be at least 8 characters long.' %}</div>
       </div>
       <div class="mb-3">
-        <label class="form-label" for="id_password2">{% trans 'Confirm password' %}</label><input type="password" name="password2" autocomplete="new-password" class="form-control" placeholder="{% trans 'Confirm password' %}" aria-describedby="id_password2_helptext" id="id_password2" />
-        <div class="form-text">
-          {% trans 'To confirm, please enter your password again.' %}
-        </div>
+        <label class="form-label" for="id_password2">{% trans 'Confirm password' %}</label>
+        <input type="password"
+               name="password2"
+               autocomplete="new-password"
+               class="form-control {% if form.password2.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
+               placeholder="{% trans 'Confirm password' %}"
+               aria-describedby="id_password2_helptext"
+               id="id_password2" />
+        {% for error in form.password2.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
+        <div class="form-text">{% trans 'To confirm, please enter your password again.' %}</div>
+      </div>
+
+    {% else %}
+
+      <div class="mb-3">
+        <label class="form-label" for="id_new_password1">{% trans 'New password' %}</label>
+        <input type="password"
+               name="new_password1"
+               autocomplete="new-password"
+               class="form-control {% if form.new_password1.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
+               placeholder="{% trans 'New password' %}"
+               {% if form.new_password1.errors %}data-autofocus{% endif %}
+               id="id_new_password1" />
+        {% for error in form.new_password1.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
+        <div class="form-text">{% trans 'Your password must be at least 8 characters long.' %}</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="id_new_password2">{% trans 'Confirm new password' %}</label>
+        <input type="password"
+               name="new_password2"
+               autocomplete="new-password"
+               class="form-control {% if form.new_password2.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
+               placeholder="{% trans 'Confirm new password' %}"
+               id="id_new_password2" />
+        {% for error in form.new_password2.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
       </div>
     {% endif %}
 

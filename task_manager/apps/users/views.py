@@ -70,6 +70,11 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
             raise PermissionDenied
         return user
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
     def form_valid(self, form):
         messages.success(self.request, _("User successfully updated"))
         return super().form_valid(form)
