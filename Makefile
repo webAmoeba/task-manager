@@ -44,6 +44,9 @@ cm:
 
 #_______________________________________________________________________________Test
 test:
+	uv run pytest
+
+test-cov:
 	uv run pytest --cov=task_manager
 
 cover-html:

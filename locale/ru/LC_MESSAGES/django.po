@@ -388,3 +388,15 @@ msgid "Find out more"
 msgstr "Узнать больше"
 msgid "This password is too short. It must contain at least 8 characters."
 msgstr "Этот пароль слишком короткий. Он должен содержать не менее 8 символов."
+
+msgid "Page not found"
+msgstr "Страница не найдена"
+
+msgid "Sorry, the page you're looking for doesn't exist."
+msgstr "Извините, страница, которую вы ищете, не существует."
+
+msgid "You can go back"
+msgstr "Вы можете вернуться"
+
+msgid "to the homepage"
+msgstr "на главную"

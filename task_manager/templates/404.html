@@ -2,6 +2,15 @@
 {% load i18n %}
 
 {% block content %}
-    <h4>404: Page not found</h4>
-    <p>There are not the page you're looking for. Come <a href="{% url 'index' %}">Home</a>, padawan.</p>
+    <h1 class="my-4">404: {% trans "Page not found" %}</h1>
+    <div class="card">
+        <div class="card-body p-5 bg-light">
+            <p class="lead">
+                {% trans "Sorry, the page you're looking for doesn't exist." %}
+            </p>
+            <p>
+                {% trans "You can go back" %} <a href="{% url 'index' %}">{% trans "to the homepage" %}</a>.
+            </p>
+        </div>
+    </div>
 {% endblock %}
