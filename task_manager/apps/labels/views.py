@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models.deletion import ProtectedError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.http import urlencode
@@ -85,7 +84,7 @@ class LabelDeleteView(
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.tasks.exists():  # Проверка связей
+        if self.object.tasks.exists():
             messages.error(
                 request,
                 _("It is not possible to delete a label, because it is in use"),

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "task_manager.apps.statuses",
     "task_manager.apps.tasks",
     "task_manager.apps.labels",
+    "task_manager.apps.core",
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "rollbar.contrib.django.middleware.RollbarNotifierMiddleware",
 ]
 
 ROOT_URLCONF = "task_manager.urls"
@@ -155,6 +157,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 SITE_NAME = _("Task manager")
 
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = "/"
 
-LOGIN_URL = '/login/'
+LOGIN_URL = "/login/"
