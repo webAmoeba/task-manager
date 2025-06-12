@@ -39,6 +39,7 @@ class UsersCRUDTests(TestCase):
                 "username": "johndoe",
                 "first_name": "Updated",
                 "last_name": "User",
+                "current_username": "johndoe",
             },
         )
 
