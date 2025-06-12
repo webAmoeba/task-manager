@@ -285,6 +285,9 @@ msgstr "Имя пользователя"
 msgid "Login"
 msgstr "Вход"
 
+msgid "Enter"
+msgstr "Войти"
+
 #: task_manager/apps/users/templates/users/login.html:13
 #: task_manager/apps/users/templates/users/login.html:14
 #: task_manager/apps/users/templates/users/user_form.html:39
@@ -306,7 +309,7 @@ msgstr "Ваш пароль должен содержать не менее 8 с
 
 #: task_manager/apps/users/templates/users/user_form.html:49
 msgid "Confirm password"
-msgstr "Подтвердите пароль"
+msgstr "Подтверждение пароля"
 
 #: task_manager/apps/users/templates/users/user_form.html:51
 msgid "To confirm, please enter your password again."
@@ -314,7 +317,7 @@ msgstr "Для подтверждения введите пароль ещё р�
 
 #: task_manager/apps/users/templates/users/user_form.html:57
 msgid "Register"
-msgstr "Зарегистрироваться"
+msgstr "Зарегистрировать"
 
 #: task_manager/apps/users/templates/users/user_list.html:16
 msgid "Full name"
