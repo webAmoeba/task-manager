@@ -403,3 +403,13 @@ msgstr "Вы можете вернуться"
 
 msgid "to the homepage"
 msgstr "на главную"
+
+msgid "Current password"
+msgstr "Текущий пароль"
+
+msgid "Confirm new password"
+msgstr "Подтверждение пароля"
+msgid "New password"
+msgstr "Пароль"
+msgid "Change Password (Optional)"
+msgstr "Изменить пароль (Необязательно)"
