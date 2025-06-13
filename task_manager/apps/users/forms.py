@@ -46,24 +46,11 @@ class CustomUserChangeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
         super().__init__(*args, **kwargs)
-        if self.instance and self.instance.pk:
-            self.fields["current_username"] = forms.CharField(
-                widget=forms.HiddenInput(), initial=self.instance.username
-            )
-            self.fields["current_password"] = forms.CharField(
-                widget=forms.PasswordInput(),
-                required=False,
-                label=_("Current password"),
-            )
 
     first_name = forms.CharField(required=True, label=_("First name"))
     last_name = forms.CharField(required=True, label=_("Last name"))
     username = forms.CharField(required=True, label=_("Username"))
-    current_password = forms.CharField(
-        widget=forms.PasswordInput(),
-        required=False,
-        label=_("Current password"),
-    )
+
     new_password1 = forms.CharField(
         required=False,
         label=_("New password"),

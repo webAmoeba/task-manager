@@ -70,27 +70,6 @@
       </div>
     </div>
 
-    {% comment %} passwords {% endcomment %}
-    {% if not is_create_view %}
-      <input type="hidden"
-             name="current_username"
-             value="{{ form.current_username.value|default_if_none:'' }}" />
-
-      <div class="mb-3">
-        <label class="form-label" for="id_current_password">{% trans 'Current password' %}</label>
-        <input type="password"
-               name="current_password"
-               class="form-control {% if form.current_password.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
-               placeholder="{% trans 'Current password' %}"
-               required
-               id="id_current_password"
-               value="{{ form.current_password.value|default_if_none:'' }}"
-               {% if form.current_password.errors %}data-autofocus{% endif %}
-               autocomplete="current-password" />
-        {% for error in form.current_password.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
-      </div>
-    {% endif %}
-
     {% if is_create_view %}
       <div class="mb-3">
         <label class="form-label" for="id_password1">{% trans 'Password' %}</label>
