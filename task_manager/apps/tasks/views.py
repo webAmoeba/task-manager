@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.http import urlencode
@@ -115,7 +114,10 @@ class TaskDeleteView(CustomLoginRequiredMixin, SuccessMessageMixin, DeleteView):
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj.author != request.user:
-            raise PermissionDenied
+            messages.error(
+                request, _("A task can only be deleted by its author")
+            )
+            return redirect(self.success_url)
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

@@ -418,5 +418,6 @@ msgstr "Невозможно удалить пользователя, потом
 
 msgid "You do not have permission to change another user."
 msgstr "У вас нет прав для изменения другого пользователя."
-msgid "You do not have permission to change another user."
-msgstr "У вас нет прав для изменения другого пользователя."
+
+msgid "A task can only be deleted by its author"
+msgstr "Задачу может удалить только ее автор"
