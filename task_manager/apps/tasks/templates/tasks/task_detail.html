@@ -14,18 +14,30 @@
       <div class="container">
         <div class="row p-1">
           <div class="col">{% trans 'Author' %}</div>
-          <div class="col">{{ task.author.get_full_name }} ({{ task.author.username }})</div>
+          <div class="col">
+            {% if task.author.get_full_name %}
+              {{ task.author.get_full_name }} ({{ task.author.username }})
+            {% else %}
+              {{ task.author.username }}
+            {% endif %}
+          </div>
         </div>
+
         <div class="row p-1">
           <div class="col">{% trans 'Executor' %}</div>
           <div class="col">
             {% if task.executor %}
-              {{ task.executor.get_full_name }} ({{ task.executor.username }})
+              {% if task.executor.get_full_name %}
+                {{ task.executor.get_full_name }} ({{ task.executor.username }})
+              {% else %}
+                {{ task.executor.username }}
+              {% endif %}
             {% else %}
               —
             {% endif %}
           </div>
         </div>
+
         <div class="row p-1">
           <div class="col">{% trans 'Status' %}</div>
           <div class="col">{{ task.status.name }}</div>

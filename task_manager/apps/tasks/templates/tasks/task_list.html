@@ -86,8 +86,26 @@
             <a href="{% url 'task_detail' task.id %}">{{ task.name }}</a>
           </td>
           <td>{{ task.status }}</td>
-          <td>{{ task.author }}</td>
-          <td>{{ task.executor|default_if_none:"" }}</td>
+          <td>
+            {% if task.author.get_full_name %}
+              {{ task.author.get_full_name }}
+              <br>
+              ({{ task.author.username }})
+            {% else %}
+              {{ task.author.username }}
+            {% endif %}
+          </td>
+          <td>
+            {% if task.executor %}
+              {% if task.executor.get_full_name %}
+                {{ task.executor.get_full_name }}
+                <br>
+                ({{ task.executor.username }})
+              {% else %}
+                {{ task.executor.username }}
+              {% endif %}
+            {% endif %}
+          </td>
           <td>{{ task.created_at|date:'d.m.Y H:i' }}</td>
           <td>
             {% if task.author == request.user %}
