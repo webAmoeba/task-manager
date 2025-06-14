@@ -29,7 +29,11 @@
             {% for user in users %}
               <option value="{{ user.id }}"
                       {% if request.GET.executor == user.id|stringformat:"s" %}selected{% endif %}>
-                {{ user.first_name }} {{ user.last_name }} ({{ user.username }})
+                {% if user.get_full_name %}
+                  {{ user.get_full_name }}
+                {% else %}
+                  {{ user.username }}
+                {% endif %}
               </option>
             {% endfor %}
           </select>
