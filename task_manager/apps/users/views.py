@@ -2,9 +2,10 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
@@ -86,20 +87,17 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
 
-class UserDeleteView(LoginRequiredMixin, DeleteView):
+class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = User
     template_name = "users/user_delete.html"
     success_url = reverse_lazy("user_list")
+    success_message = _("User successfully deleted")
 
     def get_object(self, queryset=None):
         user = super().get_object(queryset)
         if self.request.user != user:
             raise PermissionDenied
         return user
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, _("User successfully deleted"))
-        return super().delete(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
