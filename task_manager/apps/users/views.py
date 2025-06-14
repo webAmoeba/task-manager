@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
@@ -98,6 +100,22 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         if self.request.user != user:
             raise PermissionDenied
         return user
+
+    def form_valid(self, form):
+        user = self.get_object()
+        from task_manager.apps.tasks.models import Task
+
+        tasks_in_use = Task.objects.filter(
+            Q(author=user) | Q(executor=user)
+        ).exists()
+
+        if tasks_in_use:
+            messages.error(
+                self.request, _("Cannot delete user because it is in use")
+            )
+            return redirect("user_list")
+
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
