@@ -89,12 +89,6 @@ class TaskUpdateView(CustomLoginRequiredMixin, UpdateView):
     form_class = TaskForm
     template_name = "tasks/task_form.html"
 
-    def dispatch(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if obj.author != request.user:
-            raise PermissionDenied
-        return super().dispatch(request, *args, **kwargs)
-
     def form_valid(self, form):
         messages.success(self.request, _("Task successfully updated"))
         return super().form_valid(form)

@@ -54,6 +54,8 @@
               <a href="{% url 'task_delete' task.id %}">{% trans 'Delete' %}</a>
             </div>
           </div>
+        {% else %}
+          <a href="{% url 'task_update' task.id %}">{% trans 'Edit' %}</a>
         {% endif %}
       </div>
     </div>
