@@ -6,18 +6,10 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>
-          {% trans 'ID' %}
-        </th>
-        <th>
-          {% trans 'Username' %}
-        </th>
-        <th>
-          {% trans 'Full name' %}
-        </th>
-        <th>
-          {% trans 'Date of creation' %}
-        </th>
+        <th>{% trans 'ID' %}</th>
+        <th>{% trans 'Username' %}</th>
+        <th>{% trans 'Full name' %}</th>
+        <th>{% trans 'Date of creation' %}</th>
         <th></th>
       </tr>
     </thead>
@@ -33,6 +25,10 @@
               <a href="{% url 'user_update' user.id %}">{% trans 'Edit' %}</a>
               <br />
               <a href="{% url 'user_delete' user.id %}">{% trans 'Delete' %}</a>
+            {% else %}
+              <a style="opacity: 0.4;" href="{% url 'user_update' user.id %}">{% trans 'Edit' %}</a>
+              <br />
+              <a style="opacity: 0.4;" href="{% url 'user_delete' user.id %}">{% trans 'Delete' %}</a>
             {% endif %}
           </td>
         </tr>

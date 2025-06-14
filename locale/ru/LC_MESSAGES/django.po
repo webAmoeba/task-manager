@@ -415,3 +415,8 @@ msgid "Change Password (Optional)"
 msgstr "Изменить пароль (Необязательно)"
 msgid "Cannot delete user because it is in use"
 msgstr "Невозможно удалить пользователя, потому что он используется"
+
+msgid "You do not have permission to change another user."
+msgstr "У вас нет прав для изменения другого пользователя."
+msgid "You do not have permission to change another user."
+msgstr "У вас нет прав для изменения другого пользователя."

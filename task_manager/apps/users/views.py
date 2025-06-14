@@ -34,9 +34,9 @@ class UserListView(ListView):
     template_name = "users/user_list.html"
     context_object_name = "users"
 
-    def get_queryset(self):
-        # Исключаем суперпользователей, включая admin
-        return User.objects.filter(is_superuser=False)
+    # def get_queryset(self):
+    #     # Исключаем суперпользователей, включая admin
+    #     return User.objects.filter(is_superuser=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -67,11 +67,14 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "users/user_form.html"
     success_url = reverse_lazy("user_list")
 
-    def get_object(self, queryset=None):
-        user = super().get_object(queryset)
-        if self.request.user != user:
-            raise PermissionDenied
-        return user
+    def dispatch(self, request, *args, **kwargs):
+        user = self.get_object()
+        if request.user != user:
+            messages.error(
+                request, _("You do not have permission to change another user.")
+            )
+            return redirect("user_list")
+        return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -95,11 +98,14 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy("user_list")
     success_message = _("User successfully deleted")
 
-    def get_object(self, queryset=None):
-        user = super().get_object(queryset)
-        if self.request.user != user:
-            raise PermissionDenied
-        return user
+    def dispatch(self, request, *args, **kwargs):
+        user = self.get_object()
+        if request.user != user:
+            messages.error(
+                request, _("You do not have permission to change another user.")
+            )
+            return redirect("user_list")
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         user = self.get_object()
