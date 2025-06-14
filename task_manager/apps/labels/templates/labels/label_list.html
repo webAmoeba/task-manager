@@ -24,7 +24,13 @@
           <td>
             <a href="{% url 'label_update' label.id %}">{% trans 'Edit' %}</a>
             <br />
-            <a href="{% url 'label_delete' label.id %}">{% trans 'Delete' %}</a>
+            {% if label.id in used_label_ids %}
+              <a style="opacity: 0.4;
+                        cursor: default"
+                 href="{% url 'label_delete' label.id %}">{% trans 'Delete' %}</a>
+            {% else %}
+              <a href="{% url 'label_delete' label.id %}">{% trans 'Delete' %}</a>
+            {% endif %}
           </td>
         </tr>
       {% endfor %}

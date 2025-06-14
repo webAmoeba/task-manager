@@ -11,6 +11,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from task_manager.apps.statuses.forms import StatusForm
 from task_manager.apps.statuses.models import Status
+from task_manager.apps.tasks.models import Task
 
 
 class CustomLoginRequiredMixin(LoginRequiredMixin):
@@ -31,6 +32,12 @@ class StatusListView(CustomLoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["page_title"] = _("Statuses")
+
+        used_status_ids = Task.objects.values_list(
+            "status_id", flat=True
+        ).distinct()
+        context["used_status_ids"] = set(used_status_ids)
+
         return context
 
 
@@ -89,7 +96,9 @@ class StatusDeleteView(
         except ProtectedError:
             messages.error(
                 self.request,
-                _("It is not possible to delete a status, "
-                    "because it is in use"),
+                _(
+                    "It is not possible to delete a status, "
+                    "because it is in use"
+                ),
             )
             return redirect(self.success_url)

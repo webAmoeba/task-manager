@@ -23,7 +23,13 @@
           <td>
             <a href="{% url 'status_update' status.id %}">{% trans 'Edit' %}</a>
             <br />
-            <a href="{% url 'status_delete' status.id %}">{% trans 'Delete' %}</a>
+            {% if status.id in used_status_ids %}
+              <a style="opacity: 0.4;
+                        cursor: default"
+                 href="{% url 'status_delete' status.id %}">{% trans 'Delete' %}</a>
+            {% else %}
+              <a href="{% url 'status_delete' status.id %}">{% trans 'Delete' %}</a>
+            {% endif %}
           </td>
         </tr>
       {% endfor %}

@@ -97,7 +97,9 @@
             {% else %}
               <a href="{% url 'task_update' task.id %}">{% trans 'Edit' %}</a>
               <br />
-              <a style="opacity: 0.4;" href="{% url 'task_delete' task.id %}">{% trans 'Delete' %}</a>
+              <a style="opacity: 0.4;
+                        cursor: default"
+                 href="{% url 'task_delete' task.id %}">{% trans 'Delete' %}</a>
             {% endif %}
           </td>
         </tr>

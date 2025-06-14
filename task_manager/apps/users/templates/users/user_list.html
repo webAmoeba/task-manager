@@ -26,9 +26,13 @@
               <br />
               <a href="{% url 'user_delete' user.id %}">{% trans 'Delete' %}</a>
             {% else %}
-              <a style="opacity: 0.4;" href="{% url 'user_update' user.id %}">{% trans 'Edit' %}</a>
+              <a style="opacity: 0.4;
+                        cursor: default"
+                 href="{% url 'user_update' user.id %}">{% trans 'Edit' %}</a>
               <br />
-              <a style="opacity: 0.4;" href="{% url 'user_delete' user.id %}">{% trans 'Delete' %}</a>
+              <a style="opacity: 0.4;
+                        cursor: default"
+                 href="{% url 'user_delete' user.id %}">{% trans 'Delete' %}</a>
             {% endif %}
           </td>
         </tr>

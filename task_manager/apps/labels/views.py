@@ -10,6 +10,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from task_manager.apps.labels.forms import LabelForm
 from task_manager.apps.labels.models import Label
+from task_manager.apps.tasks.models import Task
 
 
 class CustomLoginRequiredMixin(LoginRequiredMixin):
@@ -30,6 +31,12 @@ class LabelListView(CustomLoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["page_title"] = _("Labels")
+
+        used_label_ids = Task.objects.values_list(
+            "labels", flat=True
+        ).distinct()
+        context["used_label_ids"] = set(filter(None, used_label_ids))
+
         return context
 
 
