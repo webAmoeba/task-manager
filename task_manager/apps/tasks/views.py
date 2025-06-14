@@ -100,7 +100,7 @@ class TaskUpdateView(CustomLoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("task_detail", kwargs={"pk": self.object.pk})
+        return reverse("task_list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

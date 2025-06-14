@@ -31,12 +31,7 @@
     </div>
     <div class="mb-3">
       <label class="form-label" for="id_description">{% trans 'Description' %}</label>
-      <textarea name="description"
-                cols="40"
-                rows="10"
-                class="form-control {% if form.description.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
-                placeholder="{% trans 'Description' %}"
-                id="id_description"></textarea>
+      <textarea name="description" cols="40" rows="10" class="form-control {% if form.description.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}" placeholder="{% trans 'Description' %}" id="id_description">{{ form.description.value|default_if_none:'' }}</textarea>
       {% for error in form.name.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
     </div>
     <div class="mb-3">
@@ -48,9 +43,7 @@
         <option value="" disabled {% if not form.status.value %}selected{% endif %}>---------</option>
         {% for status in statuses %}
           <option value="{{ status.id }}"
-                  {% if status.id|stringformat:"s" == form.status.value|stringformat:"s" %}selected{% endif %}>
-            {{ status.name }}
-          </option>
+                  {% if status.id|stringformat:"s" == form.status.value|stringformat:"s" %}selected{% endif %}>{{ status.name }}</option>
         {% endfor %}
       </select>
     </div>
@@ -62,9 +55,7 @@
         <option value="" {% if not form.executor.value %}selected{% endif %}>---------</option>
         {% for user in executors %}
           <option value="{{ user.id }}"
-                  {% if user.id|stringformat:"s" == form.executor.value|stringformat:"s" %}selected{% endif %}>
-            {{ user.get_full_name|default:user.username }}
-          </option>
+                  {% if user.id|stringformat:"s" == form.executor.value|stringformat:"s" %}selected{% endif %}>{{ user.get_full_name|default:user.username }}</option>
         {% endfor %}
       </select>
     </div>
@@ -77,9 +68,7 @@
               multiple>
         {% for label in labels %}
           <option value="{{ label.id }}"
-                  {% if label.id|stringformat:"s" in form.labels.value|stringformat:"s" %}selected{% endif %}>
-            {{ label.name }}
-          </option>
+                  {% if label.id|stringformat:"s" in form.labels.value|stringformat:"s" %}selected{% endif %}>{{ label.name }}</option>
         {% endfor %}
       </select>
     </div>
