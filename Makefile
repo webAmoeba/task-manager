@@ -40,7 +40,7 @@ ms:
 	django-admin makemessages -l ru
 
 cm:
-	django-admin compilemessages
+	uv run django-admin compilemessages
 
 #_______________________________________________________________________________Test
 test:

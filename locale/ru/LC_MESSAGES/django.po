@@ -227,7 +227,7 @@ msgstr "Метка"
 
 #: task_manager/apps/tasks/templates/tasks/task_list.html:57
 msgid "Only my tasks"
-msgstr "Только мои задачи"
+msgstr "Только свои задачи"
 
 #: task_manager/apps/tasks/templates/tasks/task_list.html:60
 msgid "Show"
