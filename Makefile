@@ -21,8 +21,8 @@ collectstatic:
 	python manage.py collectstatic --noinput
 
 migrate:
-	python manage.py migrate
-	python manage.py shell < create_superuser.py
+	uv run python manage.py migrate
+	uv run python manage.py shell < create_superuser.py
 
 dev-migrate:
 	uv run manage.py makemigrations
