@@ -18,7 +18,7 @@ fix:
 #_______________________________________________________________________________
 
 collectstatic:
-	python manage.py collectstatic --noinput
+	uv run python manage.py collectstatic --noinput
 
 migrate:
 	uv run python manage.py migrate
@@ -32,12 +32,12 @@ build:
 	./build.sh
 
 render-start:
-	gunicorn task_manager.wsgi
+	uv run gunicorn task_manager.wsgi
 
 #_______________________________________________________________________________Translate
 
 ms:
-	django-admin makemessages -l ru
+	uv run django-admin makemessages -l ru
 
 cm:
 	uv run django-admin compilemessages
