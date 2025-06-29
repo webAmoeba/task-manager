@@ -3,7 +3,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=webAmoeba_python-project-52&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=webAmoeba_python-project-52)
 
 ## Deployed:
-[🌎 onrender.com](https://python-project-52-iyu7.onrender.com/)
+[🌎 task-manager.webamoeba.ru/](https://task-manager.webamoeba.ru/)
 
 # Task Manager:
 Welcome to the Task Manager project! This repository contains a web application built with Django that allows users to manage tasks efficiently by creating, updating, assigning, and organizing them with labels and statuses. It supports user authentication, role-based permissions, and detailed task tracking.
