@@ -20,13 +20,16 @@ fix:
 collectstatic:
 	uv run python manage.py collectstatic --noinput
 
-migrate:
-	uv run python manage.py migrate
+superuser:
 	uv run python manage.py shell < create_superuser.py
 
-dev-migrate:
-	uv run manage.py makemigrations
-	uv run manage.py migrate
+makemigrations:
+	uv run python manage.py makemigrations
+
+migrate:
+	uv run python manage.py migrate
+
+dev-migrate: makemigrations migrate
 
 build:
 	./build.sh
