@@ -7,6 +7,7 @@ requires-python = ">=3.10"
 dependencies = [
     "dj-database-url>=2.3.0",
     "django>=5.2",
+    "dotenv>=0.9.9",
     "gunicorn>=23.0.0",
     "psycopg2-binary>=2.9.10",
     "whitenoise>=6.9.0",
@@ -16,7 +17,6 @@ dependencies = [
 dev = [
     "coverage>=7.8.0",
     "djlint>=1.36.4",
-    "dotenv>=0.9.9",
     "pytest>=8.3.5",
     "pytest-cov>=6.1.1",
     "pytest-django>=4.11.1",
