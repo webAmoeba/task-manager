@@ -74,6 +74,8 @@
         <th>{% trans 'Status' %}</th>
         <th>{% trans 'Author' %}</th>
         <th>{% trans 'Executor' %}</th>
+        <th>{% trans 'Deadline' %}</th>
+        <th>{% trans 'Completed at' %}</th>
         <th>{% trans 'Date of creation' %}</th>
         <th></th>
       </tr>
@@ -104,6 +106,20 @@
               {% else %}
                 {{ task.executor.username }}
               {% endif %}
+            {% endif %}
+          </td>
+          <td>
+            {% if task.due_at %}
+              {{ task.due_at|date:'d.m.Y H:i' }}
+            {% else %}
+              —
+            {% endif %}
+          </td>
+          <td>
+            {% if task.completed_at %}
+              {{ task.completed_at|date:'d.m.Y H:i' }}
+            {% else %}
+              {% trans 'Pending' %}
             {% endif %}
           </td>
           <td>{{ task.created_at|date:'d.m.Y H:i' }}</td>

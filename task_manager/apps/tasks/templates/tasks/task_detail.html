@@ -43,6 +43,26 @@
           <div class="col">{{ task.status.name }}</div>
         </div>
         <div class="row p-1">
+          <div class="col">{% trans 'Deadline' %}</div>
+          <div class="col">
+            {% if task.due_at %}
+              {{ task.due_at|date:'d.m.Y H:i' }}
+            {% else %}
+              —
+            {% endif %}
+          </div>
+        </div>
+        <div class="row p-1">
+          <div class="col">{% trans 'Completed at' %}</div>
+          <div class="col">
+            {% if task.completed_at %}
+              {{ task.completed_at|date:'d.m.Y H:i' }}
+            {% else %}
+              {% trans 'Pending' %}
+            {% endif %}
+          </div>
+        </div>
+        <div class="row p-1">
           <div class="col">{% trans 'Date of creation' %}</div>
           <div class="col">{{ task.created_at|date:'d.m.Y H:i' }}</div>
         </div>

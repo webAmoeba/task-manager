@@ -59,11 +59,20 @@
         {% endfor %}
       </select>
     </div>
+    <div class="mb-3">
+      <label class="form-label" for="id_due_at">{% trans 'Deadline' %}</label>
+      <input type="datetime-local"
+             name="due_at"
+             class="form-control {% if form.due_at.errors %} is-invalid {% elif form.is_bound and form.due_at.value %} is-valid {% endif %}"
+             id="id_due_at"
+             value="{{ form.due_at.value|default_if_none:'' }}" />
+      {% for error in form.due_at.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
+    </div>
 
     <div class="mb-3">
       <label class="form-label" for="id_labels">{% trans 'Labels' %}</label>
       <select name="labels"
-              class="form-select {% if form.executor.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
+              class="form-select {% if form.labels.errors %} is-invalid {% elif form.is_bound %} is-valid {% endif %}"
               id="id_labels"
               multiple>
         {% for label in labels %}
@@ -71,6 +80,7 @@
                   {% if label.id|stringformat:"s" in form.labels.value|stringformat:"s" %}selected{% endif %}>{{ label.name }}</option>
         {% endfor %}
       </select>
+      {% for error in form.labels.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
     </div>
 
     {% if is_create_view %}
