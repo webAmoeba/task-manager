@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponseForbidden
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.http import urlencode
@@ -117,7 +118,7 @@ class TaskDeleteView(CustomLoginRequiredMixin, SuccessMessageMixin, DeleteView):
             messages.error(
                 request, _("A task can only be deleted by its author")
             )
-            return redirect(self.success_url)
+            return HttpResponseForbidden(_("Forbidden"))
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

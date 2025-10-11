@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
+from django.http import HttpResponseForbidden
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -72,7 +73,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
             messages.error(
                 request, _("You do not have permission to change another user.")
             )
-            return redirect("user_list")
+            return HttpResponseForbidden(_("Forbidden"))
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
@@ -103,7 +104,7 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
             messages.error(
                 request, _("You do not have permission to change another user.")
             )
-            return redirect("user_list")
+            return HttpResponseForbidden(_("Forbidden"))
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
