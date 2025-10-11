@@ -15,6 +15,16 @@ class Task(models.Model):
         blank=True,
         related_name="executed_tasks",
     )
+    due_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="Deadline for task completion",
+    )
+    completed_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="Timestamp when the task was marked complete",
+    )
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="authored_tasks"
     )
@@ -25,3 +35,7 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def is_completed(self):
+        return self.completed_at is not None
