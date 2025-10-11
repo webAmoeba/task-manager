@@ -421,3 +421,10 @@ msgstr "У вас нет прав для изменения другого по�
 
 msgid "A task can only be deleted by its author"
 msgstr "Задачу может удалить только ее автор"
+
+msgid "Deadline"
+msgstr "Дедлайн"
+msgid "Completed at"
+msgstr "Дата завершения"
+msgid "Pending"
+msgstr "Выполняется"
