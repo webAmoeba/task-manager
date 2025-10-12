@@ -1,6 +1,9 @@
+from datetime import timedelta
+
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
+from django.utils import timezone
 
 from task_manager.apps.labels.models import Label
 from task_manager.apps.statuses.models import Status
@@ -14,6 +17,9 @@ class TaskCRUDTests(TestCase):
         )
         self.executor = User.objects.create_user(
             username="executor", password="pass"
+        )
+        self.other_user = User.objects.create_user(
+            username="outsider", password="pass"
         )
         self.status = Status.objects.create(name="In Progress")
         self.label = Label.objects.create(name="Bug")
@@ -69,9 +75,7 @@ class TaskCRUDTests(TestCase):
             reverse("task_delete", args=[self.task.id]), follow=True
         )
         self.assertEqual(response.status_code, 200)
-        self.assertContains(
-            response, "Task successfully deleted"
-        )
+        self.assertContains(response, "Task successfully deleted")
         self.assertFalse(Task.objects.filter(id=self.task.id).exists())
 
     def test_delete_task_forbidden_for_not_author(self):
@@ -80,3 +84,27 @@ class TaskCRUDTests(TestCase):
         response = self.client.post(reverse("task_delete", args=[self.task.id]))
         self.assertEqual(response.status_code, 403)
         self.assertTrue(Task.objects.filter(id=self.task.id).exists())
+
+    def test_complete_task_by_executor(self):
+        self.client.logout()
+        self.client.force_login(self.executor)
+        response = self.client.post(
+            reverse("task_complete", args=[self.task.id]), follow=True
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Task marked as completed")
+        self.task.refresh_from_db()
+        self.assertIsNotNone(self.task.completed_at)
+        self.assertLessEqual(
+            abs(self.task.completed_at - timezone.now()), timedelta(seconds=5)
+        )
+
+    def test_complete_task_forbidden_for_other_user(self):
+        self.client.logout()
+        self.client.force_login(self.other_user)
+        response = self.client.post(
+            reverse("task_complete", args=[self.task.id])
+        )
+        self.assertEqual(response.status_code, 403)
+        self.task.refresh_from_db()
+        self.assertIsNone(self.task.completed_at)

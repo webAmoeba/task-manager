@@ -3,10 +3,12 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseForbidden
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
+from django.views import View
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -125,6 +127,27 @@ class TaskDeleteView(CustomLoginRequiredMixin, SuccessMessageMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context["page_title"] = _("Deleting a task")
         return context
+
+
+class TaskCompleteView(CustomLoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        task = get_object_or_404(
+            Task.objects.select_related("executor", "author"), pk=kwargs["pk"]
+        )
+        if task.completed_at:
+            messages.info(request, _("Task is already completed"))
+            return redirect("task_detail", pk=task.pk)
+
+        if request.user not in {task.author, task.executor}:
+            messages.error(
+                request, _("You do not have permission to complete this task.")
+            )
+            return HttpResponseForbidden(_("Forbidden"))
+
+        task.completed_at = timezone.now()
+        task.save(update_fields=["completed_at"])
+        messages.success(request, _("Task marked as completed"))
+        return redirect("task_detail", pk=task.pk)
 
 
 class TaskDetailView(DetailView):

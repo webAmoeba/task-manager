@@ -89,6 +89,18 @@
         {% else %}
           <a href="{% url 'task_update' task.id %}">{% trans 'Edit' %}</a>
         {% endif %}
+        {% if not task.completed_at %}
+          {% if request.user == task.author or request.user == task.executor %}
+            <div class="row p-1">
+              <div class="col">
+                <form method="post" action="{% url 'task_complete' task.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-success mt-2">{% trans 'Mark as completed' %}</button>
+                </form>
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
       </div>
     </div>
   </div>
