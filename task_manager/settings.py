@@ -46,12 +46,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "channels",
     "rest_framework",
     "rest_framework.authtoken",
     "task_manager",
     "task_manager.apps.users",
     "task_manager.apps.statuses",
-    "task_manager.apps.tasks",
+    "task_manager.apps.tasks.apps.TasksConfig",
     "task_manager.apps.labels",
     "task_manager.apps.core",
 ]
@@ -89,6 +90,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "task_manager.wsgi.application"
+ASGI_APPLICATION = "task_manager.asgi.application"
 
 
 # Database
@@ -175,4 +177,22 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 20,
+}
+
+CHANNEL_USE_IN_MEMORY = os.getenv("CHANNEL_USE_IN_MEMORY", "0") == "1"
+CHANNEL_REDIS_URL = os.getenv("REDIS_URL", "redis://127.0.0.1:6379/0")
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": (
+            "channels.layers.InMemoryChannelLayer"
+            if CHANNEL_USE_IN_MEMORY
+            else "channels_redis.core.RedisChannelLayer"
+        ),
+        "CONFIG": (
+            {}
+            if CHANNEL_USE_IN_MEMORY
+            else {"hosts": [CHANNEL_REDIS_URL]}
+        ),
+    }
 }

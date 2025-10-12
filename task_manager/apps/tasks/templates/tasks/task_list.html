@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block content %}
   <h1 class="my-4">{{ page_title }}</h1>
@@ -66,6 +66,8 @@
     </div>
   </div>
 
+  <div data-task-alerts></div>
+
   <table class="table table-striped">
     <thead>
       <tr>
@@ -80,9 +82,9 @@
         <th></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody data-task-table-body>
       {% for task in tasks %}
-        <tr>
+        <tr data-task-id="{{ task.id }}">
           <td>{{ task.id }}</td>
           <td>
             <a href="{% url 'task_detail' task.id %}">{{ task.name }}</a>
@@ -140,4 +142,28 @@
       {% endfor %}
     </tbody>
   </table>
+{% endblock %}
+
+{% block extra_scripts %}
+  {% trans "Edit" as edit_label %}
+  {% trans "Delete" as delete_label %}
+  {% trans "Pending" as pending_label %}
+  {% trans "New task created" as created_label %}
+  {% trans "Task updated" as updated_label %}
+  {% trans "Task deleted" as deleted_label %}
+  <script>
+    window.taskUpdatesConfig = {
+      currentUserId: {{ request.user.id|default:"null" }},
+      websocketPath: "/ws/tasks/",
+      messages: {
+        edit: "{{ edit_label|escapejs }}",
+        delete: "{{ delete_label|escapejs }}",
+        pending: "{{ pending_label|escapejs }}",
+        created: "{{ created_label|escapejs }}",
+        updated: "{{ updated_label|escapejs }}",
+        deleted: "{{ deleted_label|escapejs }}",
+      },
+    };
+  </script>
+  <script src="{% static 'tasks/js/task-updates.js' %}"></script>
 {% endblock %}
