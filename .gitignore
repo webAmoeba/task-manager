@@ -19,3 +19,4 @@ report.html
 staticfiles
 scripts/
 task_manager/management/
+dump.rdb

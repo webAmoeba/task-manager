@@ -1,8 +1,11 @@
 install:
 	uv sync
 
-dev:
+dev-django:
 	uv run python manage.py runserver
+
+dev:
+	uv run python -m daphne -p 8000 task_manager.asgi:application
 
 req:
 	uv pip compile pyproject.toml -o requirements.txt

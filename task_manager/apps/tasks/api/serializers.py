@@ -101,16 +101,28 @@ class TaskSerializer(serializers.ModelSerializer):
         return list(obj.labels.values_list("name", flat=True))
 
     def get_detail_url(self, obj):
-        return reverse("task_detail", args=[obj.pk])
+        request = self.context.get("request")
+        return request.build_absolute_uri(
+            reverse("task_detail", args=[obj.pk])
+        ) if request else reverse("task_detail", args=[obj.pk])
 
     def get_update_url(self, obj):
-        return reverse("task_update", args=[obj.pk])
+        request = self.context.get("request")
+        return request.build_absolute_uri(
+            reverse("task_update", args=[obj.pk])
+        ) if request else reverse("task_update", args=[obj.pk])
 
     def get_delete_url(self, obj):
-        return reverse("task_delete", args=[obj.pk])
+        request = self.context.get("request")
+        return request.build_absolute_uri(
+            reverse("task_delete", args=[obj.pk])
+        ) if request else reverse("task_delete", args=[obj.pk])
 
     def get_complete_url(self, obj):
-        return reverse("task_complete", args=[obj.pk])
+        request = self.context.get("request")
+        return request.build_absolute_uri(
+            reverse("task_complete", args=[obj.pk])
+        ) if request else reverse("task_complete", args=[obj.pk])
 
     def validate_due_at(self, value):
         if value and timezone.is_naive(value):
