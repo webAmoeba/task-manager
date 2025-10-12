@@ -24,6 +24,7 @@ from task_manager.apps.users.views import CustomLoginView, CustomLogoutView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.index, name="index"),
+    path("api/", include("task_manager.api.urls")),
     path("users/", include("task_manager.apps.users.urls")),
     path(
         "login/",

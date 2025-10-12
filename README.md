@@ -43,3 +43,8 @@ make migrate
 ```bash
 make dev
 ```
+
+## API
+- Obtain a token via `POST /api/auth/token/` with `username` and `password`.
+- Use the token in requests: `Authorization: Token <token>`.
+- Task endpoints available at `/api/tasks/` (CRUD + `POST /api/tasks/{id}/complete/`).
