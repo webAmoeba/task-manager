@@ -8,17 +8,22 @@ django==5.2
     # via
     #   hexlet-code (pyproject.toml)
     #   dj-database-url
+    #   djangorestframework
+djangorestframework==3.16.1
+    # via hexlet-code (pyproject.toml)
+dotenv==0.9.9
+    # via hexlet-code (pyproject.toml)
 gunicorn==23.0.0
     # via hexlet-code (pyproject.toml)
 packaging==25.0
     # via gunicorn
 psycopg2-binary==2.9.10
     # via hexlet-code (pyproject.toml)
+python-dotenv==1.1.1
+    # via dotenv
 sqlparse==0.5.3
     # via django
 typing-extensions==4.13.2
-    # via
-    #   asgiref
-    #   dj-database-url
+    # via dj-database-url
 whitenoise==6.9.0
     # via hexlet-code (pyproject.toml)
