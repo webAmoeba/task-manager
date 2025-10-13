@@ -3,6 +3,7 @@ from typing import Dict, Optional
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from django.utils import timezone
 
 from task_manager.apps.notifications.models import Notification
 
@@ -12,8 +13,16 @@ logger = logging.getLogger(__name__)
 def serialize_notification(
     notification: Notification,
 ) -> Dict[str, Optional[str]]:
-    created_at = notification.created_at
-    read_at = notification.read_at
+    def format_dt(value):
+        if not value:
+            return None
+        aware = value
+        if timezone.is_naive(aware):
+            aware = timezone.make_aware(
+                aware, timezone.get_current_timezone()
+            )
+        return timezone.localtime(aware).isoformat()
+
     return {
         "id": notification.id,
         "type": notification.type,
@@ -21,8 +30,8 @@ def serialize_notification(
         "message": notification.message,
         "task_id": notification.task_id,
         "is_read": notification.is_read,
-        "created_at": created_at.isoformat() if created_at else None,
-        "read_at": read_at.isoformat() if read_at else None,
+        "created_at": format_dt(notification.created_at),
+        "read_at": format_dt(notification.read_at),
         "payload": notification.payload,
     }
 

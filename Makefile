@@ -47,10 +47,11 @@ celery-beat:
 	uv run celery -A task_manager beat -l info
 
 dev-all:
-	uv run python -m daphne -p 8000 task_manager.asgi:application & \
-	uv run celery -A task_manager worker -l info & \
-	uv run celery -A task_manager beat -l info & \
-	wait
+	@trap 'kill $$daphne $$worker $$beat 2>/dev/null' INT TERM EXIT; \
+	uv run python -m daphne -p 8000 task_manager.asgi:application & daphne=$$!; \
+	uv run celery -A task_manager worker -l info & worker=$$!; \
+	uv run celery -A task_manager beat -l info & beat=$$!; \
+	wait $$daphne $$worker $$beat
 
 
 

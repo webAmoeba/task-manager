@@ -145,3 +145,21 @@ class TaskSerializer(serializers.ModelSerializer):
         if labels is not None:
             instance.labels.set(labels)
         return instance
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+
+        def format_dt(value):
+            if not value:
+                return None
+            aware = value
+            if timezone.is_naive(aware):
+                aware = timezone.make_aware(
+                    aware, timezone.get_current_timezone()
+                )
+            return timezone.localtime(aware).isoformat()
+
+        for field in ("due_at", "completed_at", "created_at"):
+            representation[field] = format_dt(getattr(instance, field))
+
+        return representation
