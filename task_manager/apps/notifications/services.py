@@ -1,4 +1,5 @@
 import logging
+from datetime import timezone as dt_timezone
 from typing import Dict, Optional
 
 from asgiref.sync import async_to_sync
@@ -18,10 +19,9 @@ def serialize_notification(
             return None
         aware = value
         if timezone.is_naive(aware):
-            aware = timezone.make_aware(
-                aware, timezone.get_current_timezone()
-            )
-        return timezone.localtime(aware).isoformat()
+            aware = timezone.make_aware(aware, dt_timezone.utc)
+        utc_value = aware.astimezone(dt_timezone.utc)
+        return utc_value.isoformat().replace("+00:00", "Z")
 
     return {
         "id": notification.id,

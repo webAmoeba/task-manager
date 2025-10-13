@@ -1,3 +1,5 @@
+from datetime import timezone as dt_timezone
+
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils import timezone
@@ -154,10 +156,10 @@ class TaskSerializer(serializers.ModelSerializer):
                 return None
             aware = value
             if timezone.is_naive(aware):
-                aware = timezone.make_aware(
-                    aware, timezone.get_current_timezone()
-                )
-            return timezone.localtime(aware).isoformat()
+                aware = timezone.make_aware(aware, dt_timezone.utc)
+            utc_value = aware.astimezone(dt_timezone.utc)
+            iso = utc_value.isoformat()
+            return iso.replace("+00:00", "Z")
 
         for field in ("due_at", "completed_at", "created_at"):
             representation[field] = format_dt(getattr(instance, field))

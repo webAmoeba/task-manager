@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n static tz %}
+{% load i18n static %}
 
 {% block content %}
   <h1 class="my-4">{{ page_title }}</h1>
@@ -112,19 +112,19 @@
           </td>
           <td>
             {% if task.due_at %}
-              {{ task.due_at|localtime|date:'d.m.Y H:i' }}
+              {{ task.due_at|date:'d.m.Y H:i' }} UTC
             {% else %}
               —
             {% endif %}
           </td>
           <td>
             {% if task.completed_at %}
-              {{ task.completed_at|localtime|date:'d.m.Y H:i' }}
+              {{ task.completed_at|date:'d.m.Y H:i' }} UTC
             {% else %}
               {% trans 'Pending' %}
             {% endif %}
           </td>
-          <td>{{ task.created_at|localtime|date:'d.m.Y H:i' }}</td>
+          <td>{{ task.created_at|date:'d.m.Y H:i' }} UTC</td>
           <td>
             {% if task.author == request.user %}
               <a href="{% url 'task_update' task.id %}">{% trans 'Edit' %}</a>

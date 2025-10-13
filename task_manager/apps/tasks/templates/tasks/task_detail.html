@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n tz %}
+{% load i18n %}
 
 {% block content %}
   <h1 class="my-4">{{ page_title }}</h1>
@@ -46,7 +46,7 @@
           <div class="col">{% trans 'Deadline' %}</div>
           <div class="col">
             {% if task.due_at %}
-              {{ task.due_at|localtime|date:'d.m.Y H:i' }}
+              {{ task.due_at|date:'d.m.Y H:i' }} UTC
             {% else %}
               —
             {% endif %}
@@ -56,7 +56,7 @@
           <div class="col">{% trans 'Completed at' %}</div>
           <div class="col">
             {% if task.completed_at %}
-              {{ task.completed_at|localtime|date:'d.m.Y H:i' }}
+              {{ task.completed_at|date:'d.m.Y H:i' }} UTC
             {% else %}
               {% trans 'Pending' %}
             {% endif %}
@@ -64,7 +64,7 @@
         </div>
         <div class="row p-1">
           <div class="col">{% trans 'Date of creation' %}</div>
-          <div class="col">{{ task.created_at|localtime|date:'d.m.Y H:i' }}</div>
+          <div class="col">{{ task.created_at|date:'d.m.Y H:i' }} UTC</div>
         </div>
         <div class="row p-1">
           <div class="col">
