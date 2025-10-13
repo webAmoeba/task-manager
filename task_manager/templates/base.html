@@ -31,6 +31,14 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'task_list' %}">{% trans 'Tasks' %}</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link position-relative" href="{% url 'notifications:list' %}">
+                  {% trans 'Notifications' %}
+                  {% if notifications_unread_count %}
+                    <span class="badge rounded-pill text-bg-danger ms-1">{{ notifications_unread_count }}</span>
+                  {% endif %}
+                </a>
+              </li>
             {% endif %}
           </ul>
 

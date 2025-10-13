@@ -35,6 +35,7 @@ urlpatterns = [
     path("statuses/", include("task_manager.apps.statuses.urls")),
     path("tasks/", include("task_manager.apps.tasks.urls")),
     path("labels/", include("task_manager.apps.labels.urls")),
+    path("notifications/", include("task_manager.apps.notifications.urls")),
 ]
 
 handler404 = "task_manager.views.custom_404"
