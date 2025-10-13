@@ -108,6 +108,8 @@
         window.notificationsConfig = {
           currentUserId: {{ request.user.id }},
           websocketPath: "/ws/notifications/",
+          apiListUrl: "/api/notifications/?unread=1",
+          apiMarkReadBase: "/api/notifications/",
         };
       </script>
       <script src="{% static 'core/js/notifications.js' %}"></script>
