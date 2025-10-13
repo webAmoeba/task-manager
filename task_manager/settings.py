@@ -210,6 +210,6 @@ CELERY_TASK_EAGER_PROPAGATES = os.getenv("CELERY_TASK_EAGER_PROPAGATES", "1") ==
 CELERY_BEAT_SCHEDULE = {
     "check-overdue-tasks": {
         "task": "task_manager.apps.notifications.tasks.check_overdue_tasks",
-        "schedule": crontab(minute="*/5"),
+        "schedule": crontab(minute="*/1"),
     }
 }

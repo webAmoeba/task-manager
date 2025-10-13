@@ -46,7 +46,13 @@ celery-worker:
 celery-beat:
 	uv run celery -A task_manager beat -l info
 
-celery: celery-worker celery-beat
+dev-all:
+	uv run python -m daphne -p 8000 task_manager.asgi:application & \
+	uv run celery -A task_manager worker -l info & \
+	uv run celery -A task_manager beat -l info & \
+	wait
+
+
 
 #_______________________________________________________________________________Translate
 

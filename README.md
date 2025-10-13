@@ -51,6 +51,9 @@ make dev
 # in separate terminals
 make celery-worker
 make celery-beat
+# or run everything in one terminal
+# (press Ctrl+C to stop all processes)
+make dev-all
 ```
 
 ## API
