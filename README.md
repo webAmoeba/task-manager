@@ -12,6 +12,7 @@ Welcome to the Task Manager project! This repository contains a web application 
 To run this project, you need to have the following software installed:
 - Python >=3.10
 - Uv
+- Redis server (for Channels and Celery)
 
 ## Preparation:
 Create .env file with code kind of:
@@ -28,6 +29,11 @@ DJANGO_SUPERUSER_EMAIL=superuser@example.com
 DJANGO_SUPERUSER_PASSWORD=password
 
 rollbar_token=rollbar_token
+CHANNEL_USE_IN_MEMORY=0
+CELERY_BROKER_URL=redis://127.0.0.1:6379/1
+CELERY_RESULT_BACKEND=redis://127.0.0.1:6379/1
+CELERY_TASK_ALWAYS_EAGER=1
+CELERY_TASK_EAGER_PROPAGATES=1
 ```
 
 ## Installation:
@@ -42,6 +48,9 @@ make migrate
 ## Local run:
 ```bash
 make dev
+# in separate terminals
+make celery-worker
+make celery-beat
 ```
 
 ## API

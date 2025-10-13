@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 
 import dj_database_url
+from celery.schedules import crontab
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     "task_manager.apps.tasks.apps.TasksConfig",
     "task_manager.apps.labels",
     "task_manager.apps.core",
+    "task_manager.apps.notifications",
 ]
 
 MIDDLEWARE = [
@@ -194,5 +196,20 @@ CHANNEL_LAYERS = {
             if CHANNEL_USE_IN_MEMORY
             else {"hosts": [CHANNEL_REDIS_URL]}
         ),
+    }
+}
+
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://127.0.0.1:6379/1")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", CELERY_BROKER_URL)
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_ALWAYS_EAGER = os.getenv("CELERY_TASK_ALWAYS_EAGER", "1") == "1"
+CELERY_TASK_EAGER_PROPAGATES = os.getenv("CELERY_TASK_EAGER_PROPAGATES", "1") == "1"
+CELERY_BEAT_SCHEDULE = {
+    "check-overdue-tasks": {
+        "task": "task_manager.apps.notifications.tasks.check_overdue_tasks",
+        "schedule": crontab(minute="*/5"),
     }
 }

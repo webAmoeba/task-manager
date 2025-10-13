@@ -40,6 +40,14 @@ build:
 render-start:
 	uv run gunicorn task_manager.wsgi
 
+celery-worker:
+	uv run celery -A task_manager worker -l info
+
+celery-beat:
+	uv run celery -A task_manager beat -l info
+
+celery: celery-worker celery-beat
+
 #_______________________________________________________________________________Translate
 
 ms:
