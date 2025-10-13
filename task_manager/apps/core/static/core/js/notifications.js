@@ -59,6 +59,7 @@
     element.setAttribute('role', 'alert');
     element.setAttribute('aria-live', 'assertive');
     element.setAttribute('aria-atomic', 'true');
+    element.setAttribute('data-bs-autohide', 'false');
     element.dataset.notificationId = notification.id;
     element.innerHTML = `
       <div class="d-flex">

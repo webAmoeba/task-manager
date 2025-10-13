@@ -1,3 +1,5 @@
+from datetime import timezone as dt_timezone
+
 from django.utils import timezone
 from rest_framework import serializers
 
@@ -34,6 +36,6 @@ class NotificationSerializer(serializers.ModelSerializer):
             return None
         aware = value
         if timezone.is_naive(aware):
-            aware = timezone.make_aware(aware, timezone.utc)
-        utc_value = aware.astimezone(timezone.utc)
+            aware = timezone.make_aware(aware, dt_timezone.utc)
+        utc_value = aware.astimezone(dt_timezone.utc)
         return utc_value.isoformat().replace("+00:00", "Z")
