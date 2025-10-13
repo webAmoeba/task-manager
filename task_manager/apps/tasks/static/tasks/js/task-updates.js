@@ -99,6 +99,7 @@
   function renderTaskRow(task) {
     const row = document.createElement("tr");
     row.dataset.taskId = task.id;
+    const isOverdue = Boolean(task.is_overdue) && !task.is_completed;
     row.innerHTML = `
       <td>${task.id}</td>
       <td><a href="${task.detail_url}">${escapeHtml(task.name)}</a></td>
@@ -108,9 +109,15 @@
         ? renderPerson(task.executor_full_name, task.executor_username)
         : ""
       }</td>
-      <td>${formatDate(task.due_at)}</td>
-      <td>${task.completed_at ? formatDate(task.completed_at) : escapeHtml(messages.pending)}</td>
-      <td>${formatDate(task.created_at)}</td>
+      <td class="${isOverdue ? "text-danger" : ""}">${
+        task.due_at ? `${formatDate(task.due_at)} UTC` : "—"
+      }</td>
+      <td>${
+        task.completed_at
+          ? `${formatDate(task.completed_at)} UTC`
+          : escapeHtml(messages.pending)
+      }</td>
+      <td>${task.created_at ? `${formatDate(task.created_at)} UTC` : ""}</td>
       <td>${buildActions(task)}</td>
     `;
     return row;

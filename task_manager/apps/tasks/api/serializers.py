@@ -36,6 +36,7 @@ class TaskSerializer(serializers.ModelSerializer):
     update_url = serializers.SerializerMethodField()
     delete_url = serializers.SerializerMethodField()
     complete_url = serializers.SerializerMethodField()
+    is_overdue = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Task
@@ -61,6 +62,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "update_url",
             "delete_url",
             "complete_url",
+            "is_overdue",
         ]
         read_only_fields = [
             "id",
@@ -78,6 +80,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "update_url",
             "delete_url",
             "complete_url",
+            "is_overdue",
         ]
 
     def get_is_completed(self, obj):

@@ -110,7 +110,7 @@
               {% endif %}
             {% endif %}
           </td>
-          <td>
+          <td class="{% if task.is_overdue %}text-danger{% endif %}">
             {% if task.due_at %}
               {{ task.due_at|date:'d.m.Y H:i' }} UTC
             {% else %}

@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -39,3 +40,9 @@ class Task(models.Model):
     @property
     def is_completed(self):
         return self.completed_at is not None
+
+    @property
+    def is_overdue(self):
+        if self.completed_at or not self.due_at:
+            return False
+        return self.due_at < timezone.now()
