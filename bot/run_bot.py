@@ -6,6 +6,7 @@ import os
 
 import django
 from aiogram import Bot, Dispatcher
+from aiogram.client.default import DefaultBotProperties
 from aiogram.filters import Command
 from aiogram.types import Message
 
@@ -29,7 +30,7 @@ BOT_TOKEN = getattr(settings, "TELEGRAM_BOT_TOKEN", "")
 if not BOT_TOKEN:
     raise RuntimeError("TELEGRAM_BOT_TOKEN is not configured")
 
-bot = Bot(BOT_TOKEN, parse_mode="HTML")
+bot = Bot(BOT_TOKEN, default=DefaultBotProperties(parse_mode="HTML"))
 dp = Dispatcher()
 
 
