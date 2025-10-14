@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "task_manager.apps.labels",
     "task_manager.apps.core",
     "task_manager.apps.notifications",
+    "task_manager.apps.telegram",
 ]
 
 MIDDLEWARE = [
@@ -164,6 +165,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 SITE_NAME = _("Task manager")
+SITE_URL = os.getenv("SITE_URL", "http://127.0.0.1:8000")
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"

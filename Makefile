@@ -53,6 +53,9 @@ dev-all:
 	uv run celery -A task_manager beat -l info & beat=$$!; \
 	wait $$daphne $$worker $$beat
 
+bot:
+	uv run python bot/run_bot.py
+
 
 
 #_______________________________________________________________________________Translate

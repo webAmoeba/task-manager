@@ -36,6 +36,7 @@ urlpatterns = [
     path("tasks/", include("task_manager.apps.tasks.urls")),
     path("labels/", include("task_manager.apps.labels.urls")),
     path("notifications/", include("task_manager.apps.notifications.urls")),
+    path("telegram/", include("task_manager.apps.telegram.urls")),
 ]
 
 handler404 = "task_manager.views.custom_404"

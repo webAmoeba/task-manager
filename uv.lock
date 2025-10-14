@@ -642,6 +642,7 @@ dependencies = [
     { name = "dotenv" },
     { name = "gunicorn" },
     { name = "psycopg2-binary" },
+    { name = "requests" },
     { name = "whitenoise" },
 ]
 
@@ -670,6 +671,7 @@ requires-dist = [
     { name = "dotenv", specifier = "==0.9.9" },
     { name = "gunicorn", specifier = "==23.0.0" },
     { name = "psycopg2-binary", specifier = "==2.9.10" },
+    { name = "requests", specifier = "==2.32.3" },
     { name = "whitenoise", specifier = "==6.9.0" },
 ]
 

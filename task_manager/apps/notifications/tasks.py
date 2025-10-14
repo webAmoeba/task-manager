@@ -8,7 +8,10 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from task_manager.apps.notifications.models import Notification
-from task_manager.apps.notifications.services import broadcast_notification
+from task_manager.apps.notifications.services import (
+    broadcast_notification,
+    send_telegram_notification,
+)
 
 User = get_user_model()
 
@@ -33,6 +36,7 @@ def _create_notification(
         payload=payload,
     )
     broadcast_notification(notification)
+    send_telegram_notification(notification)
     return notification
 
 

@@ -2,11 +2,14 @@ import logging
 from datetime import timezone as dt_timezone
 from typing import Dict, Optional
 
+import requests
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from django.conf import settings
 from django.utils import timezone
 
 from task_manager.apps.notifications.models import Notification
+from task_manager.apps.telegram.models import TelegramProfile
 
 logger = logging.getLogger(__name__)
 
@@ -50,3 +53,40 @@ def broadcast_notification(notification: Notification) -> None:
         )
     except Exception as exc:  # noqa: BLE001
         logger.debug("Notification broadcast failed: %s", exc)
+
+
+def send_telegram_notification(notification: Notification) -> None:
+    bot_token = getattr(settings, "TELEGRAM_BOT_TOKEN", "")
+    if not bot_token:
+        return
+
+    profile = TelegramProfile.objects.filter(
+        user=notification.user, is_active=True, chat_id__gt=0
+    ).first()
+    if not profile:
+        return
+
+    message_lines = [f"<b>{notification.title}</b>"]
+    if notification.message:
+        message_lines.append(notification.message)
+    if notification.task_id:
+        task_url = (
+            settings.SITE_URL.rstrip("/") + f"/tasks/{notification.task_id}/"
+        )
+        message_lines.append(f"<a href='{task_url}'>View task</a>")
+
+    text = "\n".join(message_lines)
+
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    payload = {
+        "chat_id": profile.chat_id,
+        "text": text,
+        "parse_mode": "HTML",
+        "disable_web_page_preview": True,
+    }
+
+    try:
+        response = requests.post(url, json=payload, timeout=5)
+        response.raise_for_status()
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Failed to send Telegram notification: %s", exc)

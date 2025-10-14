@@ -56,6 +56,15 @@ make celery-beat
 make dev-all
 ```
 
+## Telegram bot
+1. Create the bot via BotFather and add the token to `.env` as `TELEGRAM_BOT_TOKEN`.
+2. Generate a personal access token on the `/telegram/` page after logging in.
+3. Run the bot locally:
+   ```bash
+   make bot
+   ```
+4. In Telegram, send the generated token to the bot and use commands like `/tasks`, `/complete <id>`, `/notifications`.
+
 ## API
 - Obtain a token via `POST /api/auth/token/` with `username` and `password`.
 - Use the token in requests: `Authorization: Token <token>`.

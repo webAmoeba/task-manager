@@ -34,7 +34,9 @@ billiard==4.2.2
 celery==5.5.3
     # via hexlet-code (pyproject.toml)
 certifi==2025.10.5
-    # via aiogram
+    # via
+    #   aiogram
+    #   requests
 cffi==2.0.0
     # via cryptography
 channels==4.3.1
@@ -43,6 +45,8 @@ channels==4.3.1
     #   channels-redis
 channels-redis==4.3.0
     # via hexlet-code (pyproject.toml)
+charset-normalizer==3.4.4
+    # via requests
 click==8.3.0
     # via
     #   celery
@@ -89,6 +93,7 @@ hyperlink==21.0.0
 idna==3.10
     # via
     #   hyperlink
+    #   requests
     #   twisted
     #   yarl
 incremental==24.7.2
@@ -135,6 +140,8 @@ python-dotenv==1.1.1
     # via dotenv
 redis==6.4.0
     # via channels-redis
+requests==2.32.3
+    # via hexlet-code (pyproject.toml)
 service-identity==24.2.0
     # via twisted
 setuptools==80.9.0
@@ -161,6 +168,8 @@ typing-inspection==0.4.2
     # via pydantic
 tzdata==2025.2
     # via kombu
+urllib3==2.5.0
+    # via requests
 vine==5.1.0
     # via
     #   amqp
