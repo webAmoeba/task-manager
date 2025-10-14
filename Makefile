@@ -1,30 +1,20 @@
+.PHONY: install req dev dev-django makemigrations migrate dev-migrate collectstatic \
+        superuser build render-start celery-worker celery-beat dev-all dev-all-bot \
+        bot lint fix test test-cov cover-html test-users test-statuses ms cm
+
 install:
 	uv sync
-
-dev-django:
-	uv run python manage.py runserver
-
-dev:
-	uv run python -m daphne -p 8000 task_manager.asgi:application
 
 req:
 	uv pip compile pyproject.toml -o requirements.txt
 
-#_______________________________________________________________________________Lint
+dev:
+	uv run python -m daphne -p 8000 task_manager.asgi:application
 
-lint:
-	uv run ruff check .
+dev-django:
+	uv run python manage.py runserver
 
-fix:
-	uv run ruff check --fix
-
-#_______________________________________________________________________________
-
-collectstatic:
-	uv run python manage.py collectstatic --noinput
-
-superuser:
-	uv run python manage.py shell < create_superuser.py
+# --- Миграции / база ---------------------------------------------------------
 
 makemigrations:
 	uv run python manage.py makemigrations
@@ -34,11 +24,13 @@ migrate:
 
 dev-migrate: makemigrations migrate
 
-build:
-	./build.sh
+collectstatic:
+	uv run python manage.py collectstatic --noinput
 
-render-start:
-	uv run gunicorn task_manager.wsgi
+superuser:
+	uv run python manage.py shell < create_superuser.py
+
+# --- Celery / служебные процессы ---------------------------------------------
 
 celery-worker:
 	uv run celery -A task_manager worker -l info
@@ -53,12 +45,38 @@ dev-all:
 	uv run celery -A task_manager beat -l info & beat=$$!; \
 	wait $$daphne $$worker $$beat
 
+dev-all-bot:
+	@trap 'kill $$daphne $$worker $$beat $$bot 2>/dev/null' INT TERM EXIT; \
+	uv run python -m daphne -p 8000 task_manager.asgi:application & daphne=$$!; \
+	uv run celery -A task_manager worker -l info & worker=$$!; \
+	uv run celery -A task_manager beat -l info & beat=$$!; \
+	if [ -z "$$TELEGRAM_BOT_TOKEN" ]; then \
+		echo "TELEGRAM_BOT_TOKEN not exported – bot не запущен"; \
+	else \
+		uv run python bot/run_bot.py & bot=$$!; \
+	fi; \
+	wait $$daphne $$worker $$beat $$bot
+
 bot:
 	uv run python bot/run_bot.py
 
+# --- Сборки и деплой ---------------------------------------------------------
 
+build:
+	./build.sh
 
-#_______________________________________________________________________________Translate
+render-start:
+	uv run gunicorn task_manager.wsgi
+
+# --- Линт / форматирование ---------------------------------------------------
+
+lint:
+	uv run ruff check .
+
+fix:
+	uv run ruff check --fix
+
+# --- Локализация -------------------------------------------------------------
 
 ms:
 	uv run django-admin makemessages -l ru
@@ -66,7 +84,8 @@ ms:
 cm:
 	uv run django-admin compilemessages
 
-#_______________________________________________________________________________Test
+# --- Тесты -------------------------------------------------------------------
+
 test:
 	uv run pytest
 
