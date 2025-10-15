@@ -51,18 +51,16 @@ make dev
 # in separate terminals
 make celery-worker
 make celery-beat
+# (optionally) make bot
 # or run everything in one terminal
-# (press Ctrl+C to stop all processes)
+# (press Ctrl+C to stop all processes; launches bot if TELEGRAM_BOT_TOKEN is set)
 make dev-all
 ```
 
 ## Telegram bot
 1. Create the bot via BotFather and add the token to `.env` as `TELEGRAM_BOT_TOKEN`.
 2. Generate a personal access token on the `/telegram/` page after logging in.
-3. Run the bot locally:
-   ```bash
-   make bot
-   ```
+3. Run the bot manually (`make bot`) or rely on `make dev-all` (if the token is set).
 4. In Telegram, send the generated token to the bot and use commands like `/tasks`, `/complete <id>`, `/notifications`.
 
 ## API

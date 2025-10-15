@@ -1,6 +1,6 @@
 .PHONY: install req dev dev-django makemigrations migrate dev-migrate collectstatic \
-        superuser build render-start celery-worker celery-beat dev-all dev-all-bot \
-        bot lint fix test test-cov cover-html test-users test-statuses ms cm
+        superuser build render-start celery-worker celery-beat dev-all \
+        bot kill-all lint fix test test-cov cover-html test-users test-statuses ms cm
 
 install:
 	uv sync
@@ -39,26 +39,30 @@ celery-beat:
 	uv run celery -A task_manager beat -l info
 
 dev-all:
-	@trap 'kill $$daphne $$worker $$beat 2>/dev/null' INT TERM EXIT; \
-	uv run python -m daphne -p 8000 task_manager.asgi:application & daphne=$$!; \
-	uv run celery -A task_manager worker -l info & worker=$$!; \
-	uv run celery -A task_manager beat -l info & beat=$$!; \
-	wait $$daphne $$worker $$beat
-
-dev-all-bot:
 	@trap 'kill $$daphne $$worker $$beat $$bot 2>/dev/null' INT TERM EXIT; \
 	uv run python -m daphne -p 8000 task_manager.asgi:application & daphne=$$!; \
 	uv run celery -A task_manager worker -l info & worker=$$!; \
 	uv run celery -A task_manager beat -l info & beat=$$!; \
+	bot=; \
 	if [ -z "$$TELEGRAM_BOT_TOKEN" ]; then \
 		echo "TELEGRAM_BOT_TOKEN not exported – bot не запущен"; \
 	else \
 		uv run python bot/run_bot.py & bot=$$!; \
 	fi; \
-	wait $$daphne $$worker $$beat $$bot
+	if [ -n "$$bot" ]; then \
+		wait $$daphne $$worker $$beat $$bot; \
+	else \
+		wait $$daphne $$worker $$beat; \
+	fi
 
 bot:
 	uv run python bot/run_bot.py
+
+kill-all:
+	pkill -f "celery -A task_manager" || true
+	pkill -f "python -m daphne -p 8000 task_manager.asgi:application" || true
+	pkill -f "bot/run_bot.py" || true
+	pkill -f "manage.py runserver" || true
 
 # --- Сборки и деплой ---------------------------------------------------------
 
