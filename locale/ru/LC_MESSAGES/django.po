@@ -501,7 +501,7 @@ msgstr "Подключите свой аккаунт Telegram, чтобы пол
 
 
 msgid "Bot token"
-msgstr ""
+msgstr "Токен бота"
 
 
 msgid "Send this token to the Telegram bot to establish a connection. Only the latest generated token is valid."
@@ -545,3 +545,49 @@ msgstr "Аккаунт Telegram пока не привязан."
 
 msgid "Telegram"
 msgstr "Телеграм"
+
+msgid "New bot token generated. Send it to the Telegram bot within 24 hours."
+msgstr "Сгенерирован новый токен бота. Отправьте его боту Telegram в течение 24 часов."
+
+msgid "Active token revoked."
+msgstr "Активный токен отозван."
+
+msgid "Unknown action."
+msgstr "Неизвестное действие."
+
+msgid "Passwords do not match."
+msgstr "Пароли не совпадают."
+
+msgid "Team dashboard"
+msgstr "Панель управления команды"
+
+msgid "Go to tasks list"
+msgstr "Перейти к списку задач"
+
+msgid "Overdue now"
+msgstr "Просрочено сейчас"
+
+msgid "No tasks completed yet today."
+msgstr "Сегодня еще не выполнено ни одной задачи."
+
+msgid "Overdue tasks"
+msgstr "Просроченные задачи"
+
+msgid "Great! There are no overdue tasks."
+msgstr "Отлично! Просроченных задач нет."
+
+msgid "Track responsibilities, deadlines and updates for your team in one place."
+msgstr "Отслеживайте обязанности, сроки и обновления для вашей команды в одном месте."
+
+msgid "Dashboard"
+msgstr "Панель управления"
+
+msgid "Newest tasks today"
+msgstr "Новые задачи на сегодня"
+
+msgid "Completed today"
+msgstr "Завершенные сегодня"
+
+
+msgid "Created today"
+msgstr "Создано сегодня"

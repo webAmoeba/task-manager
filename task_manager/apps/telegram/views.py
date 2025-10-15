@@ -30,8 +30,7 @@ class TelegramSettingsView(LoginRequiredMixin, TemplateView):
             messages.success(
                 request,
                 _(
-                    "New bot token generated. \
-                        Send it to the Telegram bot within 24 hours."
+                    "New bot token generated. Send it to the Telegram bot within 24 hours."  # noqa
                 ),
             )
         elif action == "revoke_token":
