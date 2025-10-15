@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Iterable
 
 from celery import shared_task
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractBaseUser
 from django.utils import timezone, translation
 from django.utils.translation import gettext as _
 
@@ -13,12 +13,10 @@ from task_manager.apps.notifications.services import (
     send_telegram_notification,
 )
 
-User = get_user_model()
-
 
 def _create_notification(
     *,
-    user: User,
+    user: AbstractBaseUser,
     notif_type: str,
     title: str,
     message: str = "",
@@ -99,7 +97,7 @@ def check_overdue_tasks():
     )
 
     for task in overdue_tasks:
-        recipients: Iterable[User] = filter(
+        recipients: Iterable[AbstractBaseUser] = filter(
             None,
             {
                 task.executor,
