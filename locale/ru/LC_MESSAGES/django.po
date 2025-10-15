@@ -447,3 +447,101 @@ msgstr "Вам назначена задача \"%(name)s\""
 
 msgid "Author: %(author)s"
 msgstr "Автор: %(author)s"
+
+msgid "Deadline %(deadline)s has passed. Please complete or update the task."
+msgstr "Дедлайн %(deadline)s истек. Пожалуйста, выполните или обновите задание."
+
+
+msgid "Notifications"
+msgstr "Уведомления"
+
+
+msgid "Unread"
+msgstr "Непрочитанные"
+
+
+msgid "Read"
+msgstr "Прочитанные"
+
+
+msgid "All"
+msgstr "Все"
+
+
+msgid "Mark unread"
+msgstr "Отметить непрочитанным"
+
+
+msgid "Mark read"
+msgstr "Отметить как прочитанное"
+
+
+msgid "No notifications."
+msgstr "Уведомлений нет."
+
+
+msgid "Notification marked as read."
+msgstr "Уведомление отмечено как прочитанное."
+
+
+msgid "Notification marked as unread."
+msgstr "Уведомление отмечено как непрочитанное."
+
+msgid "New task created"
+msgstr "Создана новая задача"
+
+msgid "Forbidden"
+msgstr "Запрещено"
+
+msgid "Telegram Integration"
+msgstr "Интеграция с Телеграм"
+
+msgid "Link your Telegram account to receive task updates even when you are away from the web application."
+msgstr "Подключите свой аккаунт Telegram, чтобы получать обновления задач, даже если вы не пользуетесь веб-приложением."
+
+
+msgid "Bot token"
+msgstr ""
+
+
+msgid "Send this token to the Telegram bot to establish a connection. Only the latest generated token is valid."
+msgstr "Отправьте этот токен боту Телеграм для установки соединения. Действителен только последний сгенерированный токен."
+
+
+msgid "Generate new token"
+msgstr "Сгенерировать новый токен"
+
+
+msgid "Revoke token"
+msgstr "Отозвать токен"
+
+
+msgid "No active token. Generate a new one to connect with the bot."
+msgstr "Нет активного токена. Сгенерируйте новый для подключения к боту."
+
+
+msgid "Generate token"
+msgstr "Сгенерировать токен"
+
+
+msgid "Linked Telegram account"
+msgstr "Связанный аккаунт Телеграм"
+
+
+msgid "Chat ID"
+msgstr "Идентификатор чата"
+
+
+msgid "Last interaction"
+msgstr "Последнее взаимодействие"
+
+
+msgid "Unlink Telegram"
+msgstr "Отключить Телеграм"
+
+
+msgid "Telegram account is not linked yet."
+msgstr "Аккаунт Telegram пока не привязан."
+
+msgid "Telegram"
+msgstr "Телеграм"

@@ -155,7 +155,10 @@ def _fetch_tasks_for_user(user_id: int):
     queryset = (
         Task.objects.select_related("status")
         .filter(executor_id=user_id)
-        .order_by(F("completed_at").asc(nulls_last=True), F("due_at").asc(nulls_last=True))
+        .order_by(
+            F("completed_at").asc(nulls_last=True),
+            F("due_at").asc(nulls_last=True),
+        )
     )
     return list(queryset)
 
