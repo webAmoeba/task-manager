@@ -2,15 +2,130 @@
 {% load i18n %}
 
 {% block content %}
-  <h1 class="my-4 visually-hiddens">{% trans 'Task manager' %}</h1>
-  <div class="card">
-    <div class="card-body p-5 bg-light">
-      <div class="display-4">{% trans 'Greetings from Hexlet!' %}</div>
-      <p class="lead">{% trans 'Practical programming courses' %}</p>
-      <hr>
-      <a class="btn btn-primary btn-lg"
-         href="https://ru.hexlet.io"
-         target="_blank">{% trans 'Find out more' %}</a>
-    </div>
-  </div>
+  {% if request.user.is_authenticated %}
+    <section class="py-4">
+      <h1 class="mb-4">{% trans "Team dashboard" %}</h1>
+
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <p class="text-muted mb-1">{% trans "Created today" %}</p>
+              <p class="display-5 fw-semibold">{{ stats.created_today }}</p>
+              <a href="{% url 'task_list' %}" class="card-link">
+                {% trans "View all tasks" %}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <p class="text-muted mb-1">{% trans "Completed today" %}</p>
+              <p class="display-5 fw-semibold">{{ stats.completed_today }}</p>
+              <a href="{% url 'task_list' %}" class="card-link">
+                {% trans "Go to tasks list" %}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100 border-danger">
+            <div class="card-body">
+              <p class="text-muted mb-1">{% trans "Overdue now" %}</p>
+              <p class="display-5 fw-semibold text-danger">{{ stats.overdue_now }}</p>
+              <a href="{% url 'task_list' %}" class="card-link text-danger">
+                {% trans "Open tasks" %}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{% trans "Newest tasks today" %}</h5>
+              {% if created_today_list %}
+                <ul class="list-group list-group-flush">
+                  {% for task in created_today_list %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                      <div>
+                        <a href="{% url 'task_detail' task.id %}">{{ task.name }}</a>
+                        <div class="text-muted small">
+                          {{ task.created_at|date:"H:i" }} • {{ task.status.name }}
+                        </div>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p class="text-muted mb-0">{% trans "No tasks created so far." %}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{% trans "Completed today" %}</h5>
+              {% if completed_today_list %}
+                <ul class="list-group list-group-flush">
+                  {% for task in completed_today_list %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                      <div>
+                        <a href="{% url 'task_detail' task.id %}">{{ task.name }}</a>
+                        <div class="text-muted small">
+                          {{ task.completed_at|date:"H:i" }} • {{ task.status.name }}
+                        </div>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p class="text-muted mb-0">{% trans "No tasks completed yet today." %}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-danger">
+            <div class="card-body">
+              <h5 class="card-title text-danger">{% trans "Overdue tasks" %}</h5>
+              {% if overdue_list %}
+                <ul class="list-group list-group-flush">
+                  {% for task in overdue_list %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                      <div>
+                        <a href="{% url 'task_detail' task.id %}">{{ task.name }}</a>
+                        <div class="text-muted small text-danger">
+                          {{ task.due_at|date:"d.m H:i" }} UTC
+                        </div>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p class="text-muted mb-0">{% trans "Great! There are no overdue tasks." %}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% else %}
+    <section class="py-5">
+      <div class="container text-center">
+        <h1 class="display-5 mb-3">{% trans "Team Task Manager" %}</h1>
+        <p class="lead mb-4">
+          {% trans "Track responsibilities, deadlines and updates for your team in one place." %}
+        </p>
+        <a class="btn btn-primary btn-lg me-2" href="{% url 'login' %}">{% trans "Sign in" %}</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{% url 'user_create' %}">{% trans "Create account" %}</a>
+      </div>
+    </section>
+  {% endif %}
 {% endblock %}
