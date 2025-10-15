@@ -4,7 +4,7 @@ from typing import Iterable
 
 from celery import shared_task
 from django.contrib.auth import get_user_model
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.utils.translation import gettext as _
 
 from task_manager.apps.notifications.models import Notification
@@ -71,8 +71,14 @@ def send_task_assigned_notification(task_id: int):
     if has_unread:
         return
 
-    title = _('You have been assigned to task "%(name)s"') % {"name": task.name}
-    message = _("Author: %(author)s") % {"author": task.author.get_username()}
+    # Ensure translations are evaluated under Russian locale in background task
+    with translation.override("ru"):
+        title = _('You have been assigned to task "%(name)s"') % {
+            "name": task.name
+        }
+        message = _("Author: %(author)s") % {
+            "author": task.author.get_username()
+        }
     _create_notification(
         user=task.executor,
         notif_type=Notification.Type.TASK_ASSIGNED,
@@ -109,15 +115,17 @@ def check_overdue_tasks():
             ).exists()
             if exists:
                 continue
-            title = _('Task "%(name)s" is overdue') % {"name": task.name}
-            message = _(
-                "Deadline %(deadline)s has passed. Please complete\
-                or update the task."
-            ) % {
-                "deadline": timezone.localtime(task.due_at).strftime(
-                    "%d.%m.%Y %H:%M"
-                )
-            }
+            # Force Russian locale while composing notification texts
+            with translation.override("ru"):
+                title = _('Task "%(name)s" is overdue') % {"name": task.name}
+                message = _(
+                    "Deadline %(deadline)s has passed. Please complete\
+                    or update the task."
+                ) % {
+                    "deadline": timezone.localtime(task.due_at).strftime(
+                        "%d.%m.%Y %H:%M"
+                    )
+                }
             _create_notification(
                 user=user,
                 notif_type=Notification.Type.TASK_OVERDUE,

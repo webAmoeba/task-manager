@@ -438,3 +438,6 @@ msgid "You do not have permission to complete this task"
 msgstr "У вас нет разрешения на выполнение этой задачи"
 msgid "Task marked as completed"
 msgstr "Задача отмечена как выполненная"
+
+msgid "Task \"%(name)s\" is overdue"
+msgstr "Задача «%(name)s» просрочена"
