@@ -440,4 +440,10 @@ msgid "Task marked as completed"
 msgstr "Задача отмечена как выполненная"
 
 msgid "Task \"%(name)s\" is overdue"
-msgstr "Задача «%(name)s» просрочена"
+msgstr "Задача \"%(name)s\" просрочена"
+
+msgid "You have been assigned to task \"%(name)s\""
+msgstr "Вам назначена задача \"%(name)s\""
+
+msgid "Author: %(author)s"
+msgstr "Автор: %(author)s"

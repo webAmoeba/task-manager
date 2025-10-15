@@ -88,6 +88,8 @@ ms:
 cm:
 	uv run django-admin compilemessages
 
+cmf: kill-all cm dev-all
+
 # --- Тесты -------------------------------------------------------------------
 
 test:

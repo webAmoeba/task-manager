@@ -119,8 +119,7 @@ def check_overdue_tasks():
             with translation.override("ru"):
                 title = _('Task "%(name)s" is overdue') % {"name": task.name}
                 message = _(
-                    "Deadline %(deadline)s has passed. Please complete\
-                    or update the task."
+                    "Deadline %(deadline)s has passed. Please complete or update the task."  # noqa: E501
                 ) % {
                     "deadline": timezone.localtime(task.due_at).strftime(
                         "%d.%m.%Y %H:%M"
