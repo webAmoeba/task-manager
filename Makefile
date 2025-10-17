@@ -1,6 +1,7 @@
 .PHONY: install req dev dev-django makemigrations migrate dev-migrate collectstatic \
         superuser build render-start celery-worker celery-beat dev-all \
-        bot kill-all lint fix test test-cov cover-html test-users test-statuses ms cm
+        bot kill-all lint fix test test-cov cover-html test-users test-statuses ms cm \
+        vps-update vps-services-restart vps-status vps-logs
 
 install:
 	uv sync
@@ -63,6 +64,50 @@ kill-all:
 	pkill -f "python -m daphne -p 8000 task_manager.asgi:application" || true
 	pkill -f "bot/run_bot.py" || true
 	pkill -f "manage.py runserver" || true
+
+# --- VPS deploy --------------------------------------------------------------
+
+# Переопределяйте при запуске: make vps-update BRANCH=main WEB_SVC=... WORKER_SVC=...
+BRANCH ?= main
+WEB_SVC ?= task-manager-daphne.service
+WORKER_SVC ?= task-manager-celery-worker.service
+BEAT_SVC ?= task-manager-celery-beat.service
+BOT_SVC ?= task-manager-bot.service
+
+vps-update:
+	@set -e; \
+	echo ">> Fetch + reset to origin/$(BRANCH)"; \
+	git fetch origin; \
+	git checkout -q $(BRANCH) || true; \
+	git reset --hard origin/$(BRANCH); \
+	echo ">> Sync deps"; \
+	uv sync --all-groups --locked; \
+	echo ">> Migrate DB"; \
+	uv run python manage.py migrate --noinput; \
+	echo ">> Collect static"; \
+	uv run python manage.py collectstatic --noinput; \
+	$(MAKE) vps-services-restart
+
+vps-services-restart:
+	@set -e; \
+	echo ">> Restart services"; \
+	sudo systemctl restart $(WEB_SVC); \
+	sudo systemctl restart $(WORKER_SVC); \
+	sudo systemctl restart $(BEAT_SVC); \
+	# Если бот не используется на сервере — удалите строку или переопределите BOT_SVC
+	sudo systemctl restart $(BOT_SVC); \
+	echo "OK"
+
+vps-status:
+	@echo "== Systemd status =="; \
+	sudo systemctl --no-pager status $(WEB_SVC) || true; \
+	sudo systemctl --no-pager status $(WORKER_SVC) || true; \
+	sudo systemctl --no-pager status $(BEAT_SVC) || true; \
+	sudo systemctl --no-pager status $(BOT_SVC) || true
+
+vps-logs:
+	@echo "Ctrl+C to stop following logs"; \
+	sudo journalctl -u $(WEB_SVC) -u $(WORKER_SVC) -u $(BEAT_SVC) -u $(BOT_SVC) -f
 
 # --- Сборки и деплой ---------------------------------------------------------
 
