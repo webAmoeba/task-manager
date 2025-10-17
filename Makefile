@@ -69,10 +69,12 @@ kill-all:
 
 # Переопределяйте при запуске: make vps-update BRANCH=main WEB_SVC=... WORKER_SVC=...
 BRANCH ?= main
-WEB_SVC ?= task-manager-daphne.service
-WORKER_SVC ?= task-manager-celery-worker.service
-BEAT_SVC ?= task-manager-celery-beat.service
-BOT_SVC ?= task-manager-bot.service
+# Defaults for your current VPS setup: only web unit is present.
+# You can override any of these at call time: make vps-update WEB_SVC=...
+WEB_SVC ?= task_manager.service
+WORKER_SVC ?= /bin/true
+BEAT_SVC ?= /bin/true
+BOT_SVC ?= /bin/true
 
 vps-update:
 	@set -e; \
