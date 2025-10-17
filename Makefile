@@ -77,56 +77,56 @@ BEAT_SVC ?= /bin/true
 BOT_SVC ?= /bin/true
 
 vps-update:
-    @set -e; \
-    echo ">> Fetch + reset to origin/$(BRANCH)"; \
-    git fetch origin --prune; \
-    git checkout -q $(BRANCH) || true; \
-    git reset --hard origin/$(BRANCH); \
-    echo ">> Sync deps (locked)"; \
-    if ! uv sync --all-groups --locked; then \
+	@set -e; \
+	echo ">> Fetch + reset to origin/$(BRANCH)"; \
+	git fetch origin --prune; \
+	git checkout -q $(BRANCH) || true; \
+	git reset --hard origin/$(BRANCH); \
+	echo ">> Sync deps (locked)"; \
+	if ! uv sync --all-groups --locked; then \
         echo ">> Locked sync failed; fallback to uv sync"; \
         uv sync --all-groups; \
-    fi; \
-    echo ">> Migrate DB"; \
-    uv run python manage.py migrate --noinput; \
-    echo ">> Collect static"; \
-    uv run python manage.py collectstatic --noinput; \
-    $(MAKE) vps-services-restart
+	fi; \
+	echo ">> Migrate DB"; \
+	uv run python manage.py migrate --noinput; \
+	echo ">> Collect static"; \
+	uv run python manage.py collectstatic --noinput; \
+	$(MAKE) vps-services-restart
 
 vps-services-restart:
-    @set -e; \
-    echo ">> Restart services"; \
-    sudo systemctl restart $(WEB_SVC); \
-    if [ -n "$(WORKER_SVC)" ] && systemctl list-unit-files | grep -q "^$(WORKER_SVC)"; then \
-        sudo systemctl restart $(WORKER_SVC); \
-    else echo "skip worker ($(WORKER_SVC))"; fi; \
-    if [ -n "$(BEAT_SVC)" ] && systemctl list-unit-files | grep -q "^$(BEAT_SVC)"; then \
-        sudo systemctl restart $(BEAT_SVC); \
-    else echo "skip beat ($(BEAT_SVC))"; fi; \
-    if [ -n "$(BOT_SVC)" ] && systemctl list-unit-files | grep -q "^$(BOT_SVC)"; then \
-        sudo systemctl restart $(BOT_SVC); \
-    else echo "skip bot ($(BOT_SVC))"; fi; \
-    echo "OK"
+	@set -e; \
+	echo ">> Restart services"; \
+	sudo systemctl restart $(WEB_SVC); \
+	if [ -n "$(WORKER_SVC)" ] && systemctl list-unit-files | grep -q "^$(WORKER_SVC)"; then \
+	    sudo systemctl restart $(WORKER_SVC); \
+	else echo "skip worker ($(WORKER_SVC))"; fi; \
+	if [ -n "$(BEAT_SVC)" ] && systemctl list-unit-files | grep -q "^$(BEAT_SVC)"; then \
+	    sudo systemctl restart $(BEAT_SVC); \
+	else echo "skip beat ($(BEAT_SVC))"; fi; \
+	if [ -n "$(BOT_SVC)" ] && systemctl list-unit-files | grep -q "^$(BOT_SVC)"; then \
+	    sudo systemctl restart $(BOT_SVC); \
+	else echo "skip bot ($(BOT_SVC))"; fi; \
+	echo "OK"
 
 vps-status:
-    @echo "== Systemd status =="; \
-    sudo systemctl --no-pager status $(WEB_SVC) || true; \
-    if [ -n "$(WORKER_SVC)" ]; then sudo systemctl --no-pager status $(WORKER_SVC) || true; fi; \
-    if [ -n "$(BEAT_SVC)" ]; then sudo systemctl --no-pager status $(BEAT_SVC) || true; fi; \
-    if [ -n "$(BOT_SVC)" ]; then sudo systemctl --no-pager status $(BOT_SVC) || true; fi
+	@echo "== Systemd status =="; \
+	sudo systemctl --no-pager status $(WEB_SVC) || true; \
+	if [ -n "$(WORKER_SVC)" ]; then sudo systemctl --no-pager status $(WORKER_SVC) || true; fi; \
+	if [ -n "$(BEAT_SVC)" ]; then sudo systemctl --no-pager status $(BEAT_SVC) || true; fi; \
+	if [ -n "$(BOT_SVC)" ]; then sudo systemctl --no-pager status $(BOT_SVC) || true; fi
 
 vps-logs:
-    @echo "Ctrl+C to stop following logs"; \
-    sudo journalctl -u $(WEB_SVC) \
-    $(if $(WORKER_SVC),-u $(WORKER_SVC),) \
-    $(if $(BEAT_SVC),-u $(BEAT_SVC),) \
-    $(if $(BOT_SVC),-u $(BOT_SVC),) -f || true
+	@echo "Ctrl+C to stop following logs"; \
+	sudo journalctl -u $(WEB_SVC) \
+	$(if $(WORKER_SVC),-u $(WORKER_SVC),) \
+	$(if $(BEAT_SVC),-u $(BEAT_SVC),) \
+	$(if $(BOT_SVC),-u $(BOT_SVC),) -f || true
 
 vps-update-web-only:
-    $(MAKE) vps-update WORKER_SVC= BEAT_SVC= BOT_SVC=
+	$(MAKE) vps-update WORKER_SVC= BEAT_SVC= BOT_SVC=
 
 vps-reload-nginx:
-    sudo nginx -t && sudo systemctl reload nginx
+	sudo nginx -t && sudo systemctl reload nginx
 
 # --- Сборки и деплой ---------------------------------------------------------
 
