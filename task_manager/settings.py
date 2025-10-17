@@ -33,9 +33,13 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = ['webserver', '127.0.0.1', 'localhost']
-if os.getenv("webserver"):
-    ALLOWED_HOSTS.append(os.getenv("webserver"))
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+# Support multiple hosts separated by comma in .env: webserver=example.com,www.example.com
+_env_hosts = [h.strip() for h in os.getenv("webserver", "").split(",") if h.strip()]
+ALLOWED_HOSTS += _env_hosts
+
+# Trust same hosts for CSRF over HTTPS (needed for admin/login on custom domains)
+CSRF_TRUSTED_ORIGINS = [f"https://{h}" for h in _env_hosts if h and not h.startswith(".")]
 
 
 # Application definition
