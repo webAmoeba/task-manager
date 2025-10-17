@@ -591,3 +591,12 @@ msgstr "Завершенные сегодня"
 
 msgid "Created today"
 msgstr "Создано сегодня"
+
+msgid "Team Task Manager"
+msgstr "Менеджер задач команды"
+
+msgid "Sign in"
+msgstr "Войти"
+
+msgid "Create account"
+msgstr "Зарегистрироваться"
