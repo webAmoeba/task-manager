@@ -75,21 +75,32 @@
     container.appendChild(element);
   }
 
+  function log() {
+    try {
+      // eslint-disable-next-line no-console
+      console.debug('[notifications]', ...arguments);
+    } catch (_) {}
+  }
+
+  log('init', { user: config.currentUserId, ws: config.websocketPath, api: config.apiListUrl });
+
   function loadInitialNotifications() {
     const listUrl = config.apiListUrl || '/api/notifications/?unread=1';
+    log('fetch', listUrl);
     fetch(listUrl, { credentials: 'same-origin' })
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Failed to load notifications');
+          throw new Error('Failed to load notifications: ' + response.status);
         }
         return response.json();
       })
       .then((data) => {
         const results = Array.isArray(data) ? data : data.results || [];
+        log('fetched', results.length);
         results.forEach(renderNotification);
       })
-      .catch(() => {
-        /* ignore */
+      .catch((err) => {
+        log('fetch error', err && err.message ? err.message : err);
       });
   }
 
@@ -97,6 +108,10 @@
     const scheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
     const socketUrl = `${scheme}://${window.location.host}${config.websocketPath || '/ws/notifications/'}`;
     const socket = new WebSocket(socketUrl);
+
+    socket.onopen = () => {
+      log('ws open', socketUrl);
+    };
 
     socket.onmessage = (event) => {
       try {
@@ -109,11 +124,13 @@
       }
     };
 
-    socket.onclose = () => {
+    socket.onclose = (evt) => {
+      log('ws close', evt && (evt.code + ' ' + (evt.reason || '')));
       setTimeout(connect, 3000);
     };
 
-    socket.onerror = () => {
+    socket.onerror = (e) => {
+      log('ws error', e && e.message ? e.message : e);
       socket.close();
     };
   }

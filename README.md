@@ -57,6 +57,13 @@ make celery-beat
 make dev-all
 ```
 
+## Static files in production
+- The app reads `STATIC_ROOT` from the environment. If not set, it defaults to `./staticfiles`.
+- Recommended on server:
+  - Set in `.env`: `STATIC_ROOT=/var/www/task-manager/staticfiles`
+  - Update Nginx: `location /static/ { alias /var/www/task-manager/staticfiles/; }`
+  - Then run: `uv run python manage.py collectstatic --noinput` and reload Nginx.
+
 ## Telegram bot
 1. Create the bot via BotFather and add the token to `.env` as `TELEGRAM_BOT_TOKEN`.
 2. Generate a personal access token on the `/telegram/` page after logging in.
